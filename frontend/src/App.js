@@ -1,5 +1,4 @@
-import './App.css';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from "react-router-dom";
 import Signup from "./pages/Signup";
 
 function App() {
