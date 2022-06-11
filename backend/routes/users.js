@@ -1,8 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const User = require("../schema/user.js");
-const Joi = require('joi');
+
+const {
+  User,
+  postUsersSchema
+} = require("../schema/user.js");
+
 
 router.post("/auth", async (req, res) => {
   const { userId, password } = req.body;
@@ -21,13 +25,6 @@ router.post("/auth", async (req, res) => {
     result: "success",
     token,
   });
-});
-
-
-const postUsersSchema = Joi.object({
-  userId: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-  nickName: Joi.string().pattern(new RegExp(/^[0-9a-zA-z+_-]+$/)).required(),
-  password: Joi.string().alphanum().min(4).required(),
 });
 
 router.post("/signup", async (req, res) => {
