@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { loginDB } from '../redux/modules/user';
 // import { loginUser } from '../redux/modules/userSlice';
 
 function Login() {
@@ -9,16 +10,29 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
 
+    const emailCheck = (email) => {
+        let reg = /^[0-9a-zA-Z]([-_.0-9a-zA-Z])*@[0-9a-zA-Z]([-_.0-9a-zA-Z])*.([a-zA-Z])*/;
+        return reg.test(email);
+    };
+
+    //비밀번호 영문/숫자 포함(8_20자)
+    const passwordCheck = (password) => {
+        let _reg2 = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
+
+        return _reg2.test(password);
+    }
+
     const handleLogin = () => {
         if (email === "" || password === "") {
             window.alert("이메일,비밀번호 모두 입력해주세요.")
-        } else {
-            const loginData = {
-                email,
-                password
-            }
-            // dispatch(loginUser(loginData))
         }
+        if (!emailCheck) {
+            window.alert("이메일 형식에 맞게 작성해주세요요")
+        }
+        if (!passwordCheck(password)) {
+            window.alert('비밀번호를 형식에 맞게 입력해주세요')
+        }
+        dispatch(loginDB(email, password))
     }
     return (
         <AccountSection>

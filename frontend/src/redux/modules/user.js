@@ -1,5 +1,6 @@
 // user.js
 import axios from "axios";
+import { setCookie } from "./Cookie";
 
 // Actions
 
@@ -47,37 +48,34 @@ export const signupDB = (email, nickname, password) => {
     }
 }
 
-// export const loginFB = (user_id, user_pw) => {
-//     return function (dispatch) {
-//         setPersistence(auth, browserSessionPersistence)
-//             .then(() => {
-//                 const Auth = auth;
-//                 signInWithEmailAndPassword(Auth, user_id, user_pw)
-//                     .then((user) => {
-//                         console.log(user)
-//                         dispatch(
-//                             logInUser({
-//                                 user_id,
-//                                 name: user.user.displayName,
-//                                 uid: user.user.uid
-//                             })
-//                         )
-//                         console.log(user.user.uid)
-//                     }).catch((error) => {
-//                         window.alert("아이디 또는 비밀번호가 올바르지 않습니다!");
-//                         const errorCode = error.code;
-//                         const errorMessage = error.message;
-//                         console.log(errorCode, errorMessage)
-//                     })
-//             })
-//             .catch((error) => {
-//                 // Handle Errors here.
-//                 const errorCode = error.code;
-//                 const errorMessage = error.message;
-//                 console.log(errorCode, errorMessage)
-//             })
-//     }
-// }
+export const loginDB = (email, password) => {
+    return async function (dispatch) {
+        await axios.post("http://15.165.160.107:3000/users/auth", {
+            userId: email,
+            password: password,
+        })
+            .then((user) => {
+                console.log(user)
+                const token = user.data.token
+                setCookie("token", token)
+                localStorage.setItem("userId", user.data.userId);
+                localStorage.setItem("is_login", true);
+                dispatch(
+                    logInUser({
+                        userId: email,
+                    })
+                )
+                window.alert(`${user.data.nickName}님 환영합니다.`)
+                window.location.assign("/")
+            }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                window.alert("로그인에 실패했습니다! 다시 시도해주세요요");
+                console.log(errorCode, errorMessage)
+            })
+    }
+}
+
 
 // export const logoutFB = () => {
 //     return function (dispatch) {
@@ -106,10 +104,6 @@ export const signupDB = (email, nickname, password) => {
 // Reducer
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-        case ACCOUNT:
-            state.user = { ...action.user };
-            state.is_login = true;
-            return state;
         case LOGIN:
             state.user = { ...action.user }
             console.log(state.user)
