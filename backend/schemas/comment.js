@@ -24,7 +24,7 @@ const commentSchema = new Schema
         trim: true,
       },
       createdAt: {
-        type: String,
+        type: Number,
         required: true,
         trim: true,
       },
