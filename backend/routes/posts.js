@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth-middleware")
-const Post = require("../schema/post")
-const Comment = require("../schema/comment")
+const Post = require("../schemas/post")
+const Comment = require("../schemas/comment")
 // const upload = require("../middleware/upload");
 // router.get("/api", (req, res) => {
 //     res.send("hello world")
