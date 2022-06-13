@@ -52,10 +52,10 @@ router.post("/", auth, async(req, res) => { //posts
 
 //전체 게시물 조회
 router.get("/", async(req, res) => { //posts
-    const { title, content, createdAt, nickName, postImage } = req.query; // objectId추가
+    const { title, content, createdAt, nickName, postImage, postId } = req.query; // objectId추가
     // const postId = await Post.find(_id : _i) 협의후 추가
 
-    const post = await Post.find({title, content, createdAt, nickName, postImage })
+    const post = await Post.find({title, content, createdAt, nickName, postImage, postId })
     console.log(post);
 
     res.send({post: post});
