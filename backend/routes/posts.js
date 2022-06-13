@@ -72,7 +72,7 @@ router.get("/:postId", async(req, res) => { //posts/:postId
 })
 
 //게시글 삭제
-router.delete("/:postId", async(req, res) => { // /posts/:postId
+router.delete("/:postId", auth, async(req, res) => { // /posts/:postId
     const { postId } = req.params //req.params; 
     const { user } = res.locals;
     const userId = user["userId"]  //user["userId"];
@@ -98,7 +98,7 @@ router.delete("/:postId", async(req, res) => { // /posts/:postId
 });
 
 //게시글 수정
-router.put("/:postId",  async(req, res) => { ///posts/:postId
+router.put("/:postId",  auth, async(req, res) => { ///posts/:postId
     const { postId } = req.params;
     
     const { user } = res.locals;
