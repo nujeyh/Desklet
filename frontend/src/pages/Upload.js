@@ -35,9 +35,9 @@ function Upload() {
 
 
     const handleUpload = () => {
-        if (content === "" || fileInput === "" || title === "") {
-            window.alert('내용을 입력해주세요!')
-        }
+        // if (content === "" || fileInput === "" || title === "") {
+        //     window.alert('내용을 입력해주세요!')
+        // }
 
         const formData = new FormData();
         formData.append('postImage', fileInput.current.files[0])

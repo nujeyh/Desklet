@@ -58,7 +58,7 @@ export const addPostDB = (formData) => {
     //   formData,
     //   createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
     // };
-    await axios.post("http://localhost:5001/posts", {
+    await axios.post("http://15.165.160.107/posts", {
       data: formData,
       headers: {
         "Content-Type": "multipart/form-data",
@@ -77,7 +77,7 @@ export const addPostDB = (formData) => {
 
 export const deletePostDB = (postId) => {
   return async function (dispatch) {
-    await axios.delete("http://localhost:5001/posts", {
+    await axios.delete("http://15.165.160.107/posts", {
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -93,7 +93,7 @@ export const deletePostDB = (postId) => {
 // 게시물 모두 불러오기 | GET
 export const getPostListDB = () => async (dispatch) => {
   try {
-    const { data } = await axios.get("http://localhost:5001/posts");
+    const { data } = await axios.get("http://15.165.160.107/posts");
     dispatch(getPostList(data));
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
@@ -104,7 +104,7 @@ export const getPostListDB = () => async (dispatch) => {
 // 게시글 하나 불러오기 | GET
 export const getPostOneDB = (postId) => async (dispatch) => {
   try {
-    const { data } = await axios.get("http://localhost:5001/posts/" + postId);
+    const { data } = await axios.get("http://15.165.160.107/posts" + postId);
     dispatch(getPostOne(data));
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");

@@ -56,10 +56,11 @@ export const loginDB = (email, password) => {
         })
             .then((user) => {
                 console.log(email)
-                const token = user.data.token
-                setCookie("token", token)
-                localStorage.setItem("userId", email);
-                localStorage.setItem("is_login", true);
+                // const token = user.data.token
+                localStorage.setItem("token", user.data.token);
+                // setCookie("token", token)
+                // localStorage.setItem("userId", email);
+                // localStorage.setItem("is_login", true);
                 dispatch(
                     logInUser({
                         userId: email,
