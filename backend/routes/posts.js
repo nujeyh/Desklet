@@ -10,16 +10,25 @@ const Comment = require("../schema/comment")
 
 // 게시물 작성
 router.post("/", auth, async(req, res) => { //posts
-    const { user } = res.locals.user // userId vertual ID???
+    
+    const createdAt = new Date().toLocaleString()
+     const { user } = res.locals.user
     const userId = user["userId"]
-    // const userId = "test8"
-    const { title, content, createdAt, postImage, nickName} = req.body; // userId 추가해야합니다.
-    console.log(postId);
-    await Post.create({ title, content, createdAt, nickName, postImage, userId });
+    // const userId = "TEST입니다123123"
+    const { title, content, nickName, postImage} = req.body; // userId 추가해야합니다.
+    const postExist = await Post.find()
+    let postId = 0;
+    
+	if(postExist.length){
+		postId = postExist[0]['postId'] + 1
+	}else{
+		postId = 1
+	}
+
+    await Post.create({ title, content, nickName, postImage, userId, createdAt, postId });
 
     res.json({ success: "msg"})
-
-});
+})
 
 //전체 게시물 조회
 router.get("/", async(req, res) => { //posts
