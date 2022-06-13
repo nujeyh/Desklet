@@ -1,32 +1,61 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../middleware/auth-middleware")
+// const auth = require("../middleware/auth-middleware")
 const Post = require("../schema/post")
 const Comment = require("../schema/comment")
-
+// const upload = require("../middleware/upload");
 // router.get("/api", (req, res) => {
 //     res.send("hello world")
 // })
 
 // 게시물 작성
+// upload.single('postImage')에서 'image'는 변수명
+// auth추가
+// router.post("/", upload.single(postImage), async(req, res) => { //posts
+//     console.log(req.file)
+//     // req.file내에는 fieldname, originalname,
+//     //encoding, destination, filename 등의 정보가 저장
+//     // 저장 성공시 asw s3 버킷에 저장
+//     const postImage = req.file.location;
+//     const createdAt = new Date().toLocaleString()
+//     // const { user } = res.locals.user
+//     // const userId = user["userId"]
+//     const userId = "TEST입니다"
+//     const { title, content, nickName} = req.body; // userId 추가해야합니다.
+//     console.log(postId);
+//     await Post.create({ title, content, nickName, postImage, userId, createdAt });
+
+//     res.json({ success: "msg"})
+
+// });
+
 router.post("/", auth, async(req, res) => { //posts
-    const { user } = res.locals.user // userId vertual ID???
+    
+    const createdAt = new Date().toLocaleString()
+     const { user } = res.locals.user
     const userId = user["userId"]
-    // const userId = "test8"
-    const { title, content, createdAt, postImage, nickName} = req.body; // userId 추가해야합니다.
-    console.log(postId);
-    await Post.create({ title, content, createdAt, nickName, postImage, userId });
+    // const userId = "TEST입니다123123"
+    const { title, content, nickName, postImage} = req.body; // userId 추가해야합니다.
+    const postExist = await Post.find()
+    let postId = 0;
+    
+	if(postExist.length){
+		postId = postExist[0]['postId'] + 1
+	}else{
+		postId = 1
+	}
+
+    await Post.create({ title, content, nickName, postImage, userId, createdAt, postId });
 
     res.json({ success: "msg"})
-
-});
+})
 
 //전체 게시물 조회
 router.get("/", async(req, res) => { //posts
     const { title, content, createdAt, nickName, postImage } = req.query; // objectId추가
     // const postId = await Post.find(_id : _i) 협의후 추가
 
-    const post = await Post.find({title, content, createdAt, nickName, postImage, postId})
+    const post = await Post.find({title, content, createdAt, nickName, postImage })
     console.log(post);
 
     res.send({post: post});
@@ -43,7 +72,7 @@ router.get("/:postId", async(req, res) => { //posts/:postId
 })
 
 //게시글 삭제
-router.delete("/:postId", auth, async(req, res) => { // /posts/:postId
+router.delete("/:postId", async(req, res) => { // /posts/:postId
     const { postId } = req.params //req.params; 
     const { user } = res.locals;
     const userId = user["userId"]  //user["userId"];
@@ -69,7 +98,7 @@ router.delete("/:postId", auth, async(req, res) => { // /posts/:postId
 });
 
 //게시글 수정
-router.put("/:postId", auth, async(req, res) => { ///posts/:postId
+router.put("/:postId",  async(req, res) => { ///posts/:postId
     const { postId } = req.params;
     
     const { user } = res.locals;
