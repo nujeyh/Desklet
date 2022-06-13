@@ -20,6 +20,7 @@ function Upload() {
     const selectImg = (e) => {
         const reader = new FileReader();
         const theFile = fileInput.current.files[0]
+        console.log(theFile)
         reader.readAsDataURL(theFile)
         reader.onloadend = (finishiedEvent) => {
             const {
@@ -30,20 +31,21 @@ function Upload() {
 
     }
 
-    const formData = new FormData();
-    if (fileInput.current) {
-        formData.append('postImage', fileInput.current.files[0])
-        formData.append('title', title)
-        formData.append('content', content)
-        // for (var pair of formData.entries()){
-        //     console.log(pair);
-        //  }
-    }
+
+
 
     const handleUpload = () => {
         if (content === "" || fileInput === "" || title === "") {
             window.alert('내용을 입력해주세요!')
         }
+
+        const formData = new FormData();
+        formData.append('postImage', fileInput.current.files[0])
+        formData.append('title', title)
+        formData.append('content', content)
+
+        // for (var pair of formData.entries()) { console.log(pair[0] + ", " + pair[1]); }
+
         dispatch(addPostDB(formData))
     }
 
@@ -52,18 +54,18 @@ function Upload() {
             {/* <Header /> */}
             <p>{post_list.nickName}님의 데스크 셋업을 소개해보세요!</p>
             <ImgSection>
-                <label>
-                    <button id="file-input">파일선택</button>
-                </label>
+                <button>
+                    <label htmlFor='file-input'>파일선택</label>
+                </button>
                 <input id="file-input" type="file" accept="img/*" ref={fileInput} onChange={selectImg} style={{ display: "none" }} />
                 <img src={attachment ? attachment : "https://user-images.githubusercontent.com/75834421/124501682-fb25fd00-ddfc-11eb-93ec-c0330dff399b.jpg"} alt="" />
             </ImgSection>
             <TitleInput type="text" placeholder='제목 입력...' value={title} onChange={(e) => setTitle(e.target.value)} />
             <Textarea rows="8" placeholder="내용 입력..." value={content} onChange={(e) => setContent(e.target.value)} />
             {is_edit ? (
-                <Btn onClick={handleUpload}>작성하기</Btn>
-            ) : (
                 <Btn>수정하기</Btn>
+            ) : (
+                <Btn onClick={handleUpload}>작성하기</Btn>
             )}
         </UploadSection>
     )
@@ -100,7 +102,7 @@ const ImgSection = styled.div`
       height: 400px;
       margin-bottom: 30px;
   }
-  label>button {
+  button {
       width: 100px;
       height: 36px;
       margin-bottom: 20px;
