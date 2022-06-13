@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Comments = require('../schemas/comment');
-const authMiddleware = require("../middleware/auth-middleware");
+const authMiddleware = require("../middlewares/auth-middleware");
 
 router.get('/', async (req, res) => {
   const { postId } = req.body;
