@@ -3,13 +3,12 @@ const router = express.Router();
 const Comments = require('../schemas/comment');
 const authMiddleware = require("../middlewares/auth-middleware");
 
-router.get('/', async (req, res) => {
-  const { postId } = req.body;
+router.get('/:postId', async (req, res) => {
+  const { postId } = req.params;
   const comments = await Comments.find({ postId: postId });
-  const [ filteredcomments ] = comments.filter((inpost) => inpost.postId === postId);
-  res.json(
-    filteredcomments,
-  );
+  res.send({
+     comments : comments
+  });
 });
 
 router.post('/', authMiddleware, async function (req, res) {
@@ -19,7 +18,8 @@ router.post('/', authMiddleware, async function (req, res) {
   const createdAt = new Date().toLocaleString();
 
   try {
-    await Comments.create({ content, nickName, userId, postId, createdAt })
+    const comment = new Comments({ content, nickName, userId, postId, createdAt });
+    await comment.save();
     res.status(200).send({
       result: "success",
     });
@@ -33,9 +33,9 @@ router.post('/', authMiddleware, async function (req, res) {
 router.delete('/:commentId', authMiddleware, async function (req, res) {
   const { userId } = res.locals.user;
   const { commentId } = req.params;
-  const existComments = await Comments.findOne({ _id: commentId });;
- 
-  if (existComments.length && (String(existComments[0].userId) === String(userId))) {
+  const existComments = await Comments.findOne({ _id: commentId });
+  console.log(existComments)
+  if (existComments != '' && (String(existComments.userId) === String(userId))) {
     await Comments.deleteOne({ _id: commentId });
     res.status(200).send({
       result: "success",
