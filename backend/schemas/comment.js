@@ -38,6 +38,12 @@ const commentSchema = new Schema
       timestamps: true,
     }
   );
-
+  commentSchema.virtual("commentId").get(function () {
+    return this._id.toHexString();
+  });
+  commentSchema.set("toJSON", {
+    virtuals: true,
+  });
+  
 const Comments = mongoose.model('Comments', commentSchema);
 module.exports = Comments;
