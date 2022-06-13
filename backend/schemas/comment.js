@@ -38,6 +38,7 @@ const commentSchema = new Schema
       timestamps: true,
     }
   );
+  
   commentSchema.virtual("commentId").get(function () {
     return this._id.toHexString();
   });

@@ -7,6 +7,7 @@ router.get('/', async (req, res) => {
   const { postId } = req.body;
   const comments = await Comments.find({ postId: postId });
   const [ filteredcomments ] = comments.filter((inpost) => inpost.postId === postId);
+  
   res.json(
     filteredcomments,
   );
