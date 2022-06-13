@@ -22,6 +22,9 @@ const PostSchema = mongoose.Schema({
     userId: {
         type: String,
         required: true
+    },
+    postId: {
+        type: Number,
     }
 
 })
