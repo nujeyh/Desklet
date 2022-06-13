@@ -48,8 +48,8 @@ router.put('/:commentId', authMiddleware, async function (req, res) {
   const { userId } = res.locals.user;
   const { commentId } = req.params;
   const { changeval } = req.body;
-  
   const existComments = await Comments.find({ commentId: commentId });
+
   if (!changeval.length) {
     res.json({'msg': '수정 내용을 입력해주세요'})
     return;
