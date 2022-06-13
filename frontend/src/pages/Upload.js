@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import React, { useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 // import Header from '../components/Header'
 import styled from 'styled-components';
+import { addPostDB } from '../redux/modules/post';
 
 function Upload() {
+    const dispatch = useDispatch();
     const { id } = useParams()
     const is_edit = id ? true : false;
-    const post_list = useSelector((state) => state.postSlice.list)
+    const post_list = useSelector((state) => state.post.postList)
     const _post = is_edit ? post_list.find((p) => p.postId === id) : null
+    const fileInput = useRef(null);
 
     const [attachment, setAttachment] = useState(_post ? _post.imgUrl : "")
     const [title, setTitle] = useState(_post ? _post.title : "")
@@ -16,7 +19,7 @@ function Upload() {
 
     const selectImg = (e) => {
         const reader = new FileReader();
-        const theFile = e.target.files[0]
+        const theFile = fileInput.current.files[0]
         reader.readAsDataURL(theFile)
         reader.onloadend = (finishiedEvent) => {
             const {
@@ -27,6 +30,23 @@ function Upload() {
 
     }
 
+    const formData = new FormData();
+    if (fileInput.current) {
+        formData.append('postImage', fileInput.current.files[0])
+        formData.append('title', title)
+        formData.append('content', content)
+        // for (var pair of formData.entries()){
+        //     console.log(pair);
+        //  }
+    }
+
+    const handleUpload = () => {
+        if (content === "" || fileInput === "" || title === "") {
+            window.alert('내용을 입력해주세요!')
+        }
+        dispatch(addPostDB(formData))
+    }
+
     return (
         <UploadSection>
             {/* <Header /> */}
@@ -35,13 +55,13 @@ function Upload() {
                 <label>
                     <button id="file-input">파일선택</button>
                 </label>
-                <input id="file-input" type="file" accept="img/*" onChange={selectImg} style={{ display: "none" }} />
+                <input id="file-input" type="file" accept="img/*" ref={fileInput} onChange={selectImg} style={{ display: "none" }} />
                 <img src={attachment ? attachment : "https://user-images.githubusercontent.com/75834421/124501682-fb25fd00-ddfc-11eb-93ec-c0330dff399b.jpg"} alt="" />
             </ImgSection>
             <TitleInput type="text" placeholder='제목 입력...' value={title} onChange={(e) => setTitle(e.target.value)} />
             <Textarea rows="8" placeholder="내용 입력..." value={content} onChange={(e) => setContent(e.target.value)} />
             {is_edit ? (
-                <Btn>작성하기</Btn>
+                <Btn onClick={handleUpload}>작성하기</Btn>
             ) : (
                 <Btn>수정하기</Btn>
             )}

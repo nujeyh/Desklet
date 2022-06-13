@@ -76,6 +76,18 @@ export const loginDB = (email, password) => {
     }
 }
 
+export const logincheckDB = () => {
+    return function (dispatch) {
+        const userId = localStorage.getItem("userId");
+        const tokenCheck = document.cookie;
+        if (tokenCheck) {
+            dispatch(logInUser({ userId: userId }))
+        } else {
+            dispatch(logOutUser())
+        }
+    }
+}
+
 
 export const logoutDB = () => {
     return function (dispatch) {
