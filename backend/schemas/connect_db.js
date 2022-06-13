@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+require('dotenv').config();
 
 const connect = () => {
   mongoose
-  .connect("mongodb+srv://test:sparta@cluster0.rhzwl.mongodb.net/Desklet?retryWrites=true&w=majority", { ignoreUndefined: true }) // 27017은 mongodb의 기본 포트다.
+  .connect(process.env.MONGO_URI, { ignoreUndefined: true }) // 27017은 mongodb의 기본 포트다.
   .catch(err => console.error("db 연결이 되지 않았습니다."));      
 };
 

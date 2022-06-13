@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const {User, postUsersSchema} = require("../schemas/user.js");
 
@@ -15,7 +16,7 @@ router.post("/auth", async (req, res) => {
     });
   }
 
-  const token = jwt.sign({ userId: user.userId }, "test");
+  const token = jwt.sign({ userId: user.userId }, routes.env.JWT_SECRET_KEY);
 
   res.status(200).send({
     result: "success",
