@@ -28,7 +28,7 @@ const Comment = require("../schemas/comment")
 
 // 게시물작성
 router.post("/", auth, async(req, res) => { //posts
-    
+
     const createdAt = new Date().toLocaleString()
     const { userId, nickName } = res.locals.user
     const { title, content } = req.body; // postImage 기능 검증 후 추가
@@ -52,7 +52,6 @@ router.get("/", async(req, res) => { //posts
     // const postId = await Post.find(postId : _i) 협의후 추가
 
     const post = await Post.find({title, content, createdAt, nickName, postImage, postId })
-    console.log(post);
 
     res.send({post: post});
 });
@@ -75,8 +74,6 @@ router.delete("/:postId", auth, async(req, res) => { // /posts/:postId
 
     const existPost = await Post.find({ postId: postId});
     const existComment = await Comment.findOne({ postId });
-
-
     
     if(userId === existPost[0]['userId']) {
          if(existPost&& existComment) { 
@@ -99,7 +96,6 @@ router.put("/:postId", auth, async(req, res) => { ///posts/:postId
     
     const { user } = res.locals;
 
-    console.log("User :", user);
     const { title, content, nickName, postImage } = req.body;
 
     const userId = user["userId"];
