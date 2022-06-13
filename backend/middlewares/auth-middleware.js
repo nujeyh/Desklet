@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../schemas/user.js");
+const {User, Object} = require("../schemas/user.js");
 
 module.exports = (req, res, next) => {
     const { authorization } = req.headers; 
@@ -14,12 +14,15 @@ module.exports = (req, res, next) => {
 
     try {
       const { userId } = jwt.verify(tokenValue, "test");
+      console.log(userId);
 
-      User.findById( userId ).exec().then((user) => {
+      User.findOne({ userId }).exec().then((user) => {
           res.locals.user = user;
           next();
       });
     } catch (error) {
+      console.log("유저가 없습니다");
+
       return res.status(401).send({
           errorMessage: "로그인이 필요한 기능입니다.",
       });

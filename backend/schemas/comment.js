@@ -18,13 +18,13 @@ const commentSchema = new Schema
         required: true,
         trim: true,
       },
-      nickname: {
+      nickName: {
         type: String,
         required: true,
         trim: true,
       },
       createdAt: {
-        type: Number,
+        type: String,
         required: true,
         trim: true,
       },

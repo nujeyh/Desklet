@@ -30,11 +30,7 @@ const Comment = require("../schemas/comment")
 router.post("/", auth, async(req, res) => { //posts
     
     const createdAt = new Date().toLocaleString()
-    const { user } = res.locals.user
-    const userId = user["userId"]
-    const nickName = user["nickname"]
-    // const userId = "TEST입니다123123"
-    // const nickName = "test"
+    const { userId, nickName } = res.locals.user
     const { title, content } = req.body; // postImage 기능 검증 후 추가
     const postExist = await Post.find().sort('-postId').limit(1)
     let postId = 0;
