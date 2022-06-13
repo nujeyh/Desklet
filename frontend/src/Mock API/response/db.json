@@ -1,0 +1,117 @@
+{
+  "posts": [
+    {
+      "id": "id1",
+      "postId": "id1",
+      "createdAt": "2022-01-01",
+      "title": "제목 1",
+      "content": "내용 1",
+      "nickName": "닉네임1",
+      "imgUrl": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/projects/165318997066697078.jpg?gif=1&w=1440"
+    },
+    {
+      "id": "id2",
+      "postId": "id2",
+      "createdAt": "2022-02-02",
+      "title": "제목 2",
+      "content": "내용 2",
+      "nickName": "닉네임2",
+      "imgUrl": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/165452305180801595.jpeg?gif=1&w=1440"
+    },
+    {
+      "id": "id3",
+      "postId": "id3",
+      "createdAt": "2022-03-03",
+      "title": "제목 3",
+      "content": "내용 3",
+      "nickName": "닉네임3",
+      "imgUrl": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/165450761717014746.jpeg?gif=1&w=1440"
+    },
+    {
+      "id": "id4",
+      "postId": "id4",
+      "createdAt": "2022-04-04",
+      "title": "제목 4",
+      "content": "내용 4",
+      "nickName": "닉네임4",
+      "imgUrl": "https://i.ytimg.com/vi/C-8sFlhfosM/maxresdefault.jpg"
+    },
+    {
+      "id": "id5",
+      "postId": "id5",
+      "createdAt": "2022-05-05",
+      "title": "제목 5",
+      "content": "내용 5",
+      "nickName": "닉네임5",
+      "imgUrl": "https://i.pinimg.com/736x/4f/c2/3f/4fc23ff253848f18da5392b1d937789d.jpg"
+    }
+  ],
+  "comments": [
+    {
+      "id": "id1",
+      "postId": "id1",
+      "commentId": "1",
+      "createdAt": "2022-01-01",
+      "content": "내용 1",
+      "nickName": "닉네임1"
+    },
+    {
+      "id": "id5",
+      "postId": "id1",
+      "commentId": "5",
+      "createdAt": "2022-05-05",
+      "content": "내용5",
+      "nickName": "닉네임5"
+    },
+    {
+      "id": "id2",
+      "postId": "id2",
+      "commentId": "2",
+      "createdAt": "2022-02-02",
+      "content": "내용 2",
+      "nickName": "닉네임2"
+    },
+    {
+      "id": "id3",
+      "postId": "id3",
+      "commentId": "3",
+      "createdAt": "2022-03-03",
+      "content": "내용 3",
+      "nickName": "닉네임3"
+    },
+    {
+      "id": "id4",
+      "postId": "id4",
+      "content": "내용4",
+      "commentId": "id4",
+      "createdAt": "2022-04-04",
+      "nickName": "닉네임4"
+    },
+    {
+      "id": "id5",
+      "postId": "id5",
+      "content": "내용5",
+      "commentId": "id5",
+      "createdAt": "2022-05-05",
+      "nickName": "닉네임5"
+    },
+    {
+      "postId": "id1",
+      "userId": "userId",
+      "nickName": "nickName",
+      "commentId": "ff",
+      "content": "asdf",
+      "createdAt": "2022-06-12T16:43:23.867Z",
+      "id": "PFMx3CS"
+    },
+    {
+      "postId": "id1",
+      "userId": "userId",
+      "nickName": "nickName",
+      "commentId": "ㅇㅇ",
+      "content": "ㅇㅇㅇ",
+      "createdAt": "2022-06-12T16:51:04.526Z",
+      "id": "tK_LbYc"
+    }
+  ]
+}
