@@ -38,8 +38,8 @@ function Upload() {
                 <input id="file-input" type="file" accept="img/*" onChange={selectImg} style={{ display: "none" }} />
                 <img src={attachment ? attachment : "https://user-images.githubusercontent.com/75834421/124501682-fb25fd00-ddfc-11eb-93ec-c0330dff399b.jpg"} alt="" />
             </ImgSection>
-            <TitleInput type="text" placeholder='제목 입력...' onChange={(e) => setTitle(e.target.value)} />
-            <Textarea rows="8" placeholder="내용 입력..." onChange={(e) => setContent(e.target.value)} />
+            <TitleInput type="text" placeholder='제목 입력...' value={title} onChange={(e) => setTitle(e.target.value)} />
+            <Textarea rows="8" placeholder="내용 입력..." value={content} onChange={(e) => setContent(e.target.value)} />
             {is_edit ? (
                 <Btn>작성하기</Btn>
             ) : (

@@ -1,10 +1,10 @@
 // user.js
 import axios from "axios";
-import { setCookie } from "./Cookie";
+import { setCookie, deleteCookie } from "./Cookie";
 
 // Actions
 
-const ACCOUNT = "user/ACCOUNT";
+// const ACCOUNT = "user/ACCOUNT";
 const LOGIN = "user/LOGIN";
 const LOGOUT = "user/LOGOUT";
 
@@ -14,9 +14,9 @@ const initialState = {
 }
 
 // Action Creators
-export function accountUser(user) {
-    return { type: ACCOUNT, user }
-}
+// export function accountUser(user) {
+//     return { type: ACCOUNT, user }
+// }
 export function logInUser(user) {
     return { type: LOGIN, user }
 }
@@ -27,7 +27,7 @@ export function logOutUser(user) {
 // middlewares
 export const signupDB = (email, nickname, password) => {
     return async function (dispatch, getState) {
-        await axios.post("http://15.165.160.107:3000/users/signup",
+        await axios.post("http://15.165.160.107/users/signup",
             {
                 userId: email,
                 nickName: nickname,
@@ -50,23 +50,23 @@ export const signupDB = (email, nickname, password) => {
 
 export const loginDB = (email, password) => {
     return async function (dispatch) {
-        await axios.post("http://15.165.160.107:3000/users/auth", {
+        await axios.post("http://15.165.160.107/users/auth", {
             userId: email,
             password: password,
         })
             .then((user) => {
-                console.log(user)
+                console.log(email)
                 const token = user.data.token
                 setCookie("token", token)
-                localStorage.setItem("userId", user.data.userId);
+                localStorage.setItem("userId", email);
                 localStorage.setItem("is_login", true);
                 dispatch(
                     logInUser({
                         userId: email,
                     })
                 )
-                window.alert(`${user.data.nickName}님 환영합니다.`)
-                window.location.assign("/")
+                window.alert("환영합니다!")
+                // window.location.assign("/")
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -77,13 +77,14 @@ export const loginDB = (email, password) => {
 }
 
 
-// export const logoutFB = () => {
-//     return function (dispatch) {
-//         auth.signOut().then(() => {
-//             dispatch(logOutUser());
-//         })
-//     }
-// }
+export const logoutDB = () => {
+    return function (dispatch) {
+        deleteCookie("token")
+        localStorage.removeItem("userId")
+        localStorage.removeItem("is_login")
+        dispatch(logOutUser());
+    }
+}
 
 // export const loginCheckFB = () => {
 //     return function (dispatch) {
