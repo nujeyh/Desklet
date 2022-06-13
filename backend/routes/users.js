@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 
-const {User, postUsersSchema} = require("../schemas/user.js");
+const {
+  User,
+  postUsersSchema
+} = require("../schema/user.js");
+
 
 router.post("/auth", async (req, res) => {
   const { userId, password } = req.body;
@@ -51,5 +55,6 @@ router.post("/signup", async (req, res) => {
     result: "success",
   });
 });
+
 
 module.exports = router;
