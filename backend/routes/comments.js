@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Comments = require('../schema/comment');
+const Comments = require('../schemas/comment');
 const authMiddleware = require("../middleware/auth-middleware");
 
 router.get('/', async (req, res) => {
