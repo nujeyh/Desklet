@@ -17,7 +17,6 @@ const PostSchema = mongoose.Schema({
     // },
     nickName: {
         type: String,
-        required: true
     },
     userId: {
         type: String,
