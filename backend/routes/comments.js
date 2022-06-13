@@ -18,8 +18,6 @@ router.post('/', authMiddleware, async function (req, res) {
 
   const createdAt = new Date().toLocaleString();
 
-  console.log(userId, nickName);
-
   try {
     await Comments.create({ content, nickName, userId, postId, createdAt })
     res.status(200).send({
