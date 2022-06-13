@@ -8,6 +8,7 @@ import moment from "moment";
 ////////////
 
 const ADD_POST = "ADD_POST";
+const DELETE_POST = "DELETE_POST";
 const GET_POST_LIST = "GET_POST_LIST";
 const GET_POST_ONE = "GET_POST_ONE";
 
@@ -16,6 +17,7 @@ const GET_POST_ONE = "GET_POST_ONE";
 ////////////////////
 
 const addPost = createAction(ADD_POST, (post) => ({ post }));
+const deletePost = createAction(DELETE_POST, (postId) => ({ postId }))
 const getPostList = createAction(GET_POST_LIST, (postList) => ({ postList }));
 const getPostOne = createAction(GET_POST_ONE, (postOne) => ({ postOne }));
 
@@ -51,25 +53,39 @@ const initialState = {
 // 게시물 업로드
 export const addPostDB = (formData) => {
   return async function (dispatch, getState) {
-    const _post = {
-      ...initialState.postOne,
-      formData,
-      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-    };
-    console.log(_post);
+    // const _post = {
+    //   ...initialState.postOne,
+    //   formData,
+    //   createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    // };
     await axios.post("http://localhost:5001/posts", {
-      data: { ..._post },
+      data: formData,
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => {
-        dispatch(addPost({ ..._post }))
+        console.log(res)
+        // dispatch(addPost({ ..._post }))
       })
       .catch((error) => {
         console.log(error)
       })
+  }
+}
+
+export const deletePostDB = (postId) => {
+  return async function (dispatch) {
+    await axios.delete("http://localhost:5001/posts", {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      dispatch(deletePost(postId))
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
 
@@ -105,6 +121,11 @@ export default handleActions(
     [ADD_POST]: (state, action) => {
       produce(state, (draft) => {
         draft.postList.unshift(action.payload.post)
+      })
+    },
+    [DELETE_POST]: (state, action) => {
+      produce(state, (draft) => {
+        draft.postList = draft.postList.findIndex((p) => p.postId === action.payload.postId)
       })
     },
     [GET_POST_LIST]: (state, { payload }) =>

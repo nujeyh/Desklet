@@ -7,7 +7,7 @@ import Comment from "../components/Comment";
 
 import { MainBody } from "../components/commonStyle";
 import { getCommentListDB, postCommentDB } from "../redux/modules/comment";
-import { getPostOneDB } from "../redux/modules/post";
+import { getPostOneDB, deletePostDB } from "../redux/modules/post";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -31,6 +31,10 @@ const Detail = () => {
     dispatch(postCommentDB(commentObj));
   };
 
+  const deletePost = () => {
+    dispatch(deletePostDB(postId))
+  }
+
   useEffect(() => {
     dispatch(getPostOneDB(postId));
     dispatch(getCommentListDB(postId));
@@ -42,7 +46,7 @@ const Detail = () => {
         {isOwner && (
           <>
             <button>수정</button>
-            <button>삭제</button>
+            <button onClick={deletePost}>삭제</button>
           </>
         )}
       </div>
