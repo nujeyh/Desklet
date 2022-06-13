@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-// const auth = require("../middleware/auth-middleware")
+const auth = require("../middleware/auth-middleware")
 const Post = require("../schema/post")
 const Comment = require("../schema/comment")
 // const upload = require("../middleware/upload");
@@ -32,10 +32,10 @@ const Comment = require("../schema/comment")
 router.post("/", auth, async(req, res) => { //posts
     
     const createdAt = new Date().toLocaleString()
-     const { user } = res.locals.user
+    const { user } = res.locals.user
     const userId = user["userId"]
     // const userId = "TEST입니다123123"
-    const { title, content, nickName, postImage} = req.body; // userId 추가해야합니다.
+    const { title, content, nickName } = req.body; // postImage 기능 검증 후 추가
     const postExist = await Post.find()
     let postId = 0;
     
@@ -45,8 +45,8 @@ router.post("/", auth, async(req, res) => { //posts
 		postId = 1
 	}
 
-    await Post.create({ title, content, nickName, postImage, userId, createdAt, postId });
-
+    await Post.create({ title, content, nickName, userId, createdAt, postId });
+    // postImage 기능 검증 후 추가
     res.json({ success: "msg"})
 })
 
