@@ -81,9 +81,9 @@ export const modifyPostDB = (formData, postId) => {
     // const post_index = getState().post.postList.findIndex((p) => p.postId === postId)
     // const _post = getState().post.postList[post_index]
     await axios
-      .put(url + `/posts/${postId}`, {
-        data: formData,
+      .put(url + `/posts/${postId}`, formData, {
         headers: {
+          "Content-Type": "multipart/form-data",
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
