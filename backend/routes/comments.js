@@ -52,14 +52,15 @@ router.delete('/:commentId', authMiddleware, async function (req, res) {
 router.put('/:commentId', authMiddleware, async function (req, res) {
   const { userId } = res.locals.user;
   const { commentId } = req.params;
-  const { changeval } = req.body;
+  const { data } = req.body;
+  console.log('req.body 값: ', req.body)
   const existComments = await Comment.find({ _id: commentId });
 
-  if (!changeval.length) {
+  if (!data.length) {
     res.json({'msg': '수정 내용을 입력해주세요'})
     return;
   } else if (existComments.length && (String(existComments[0].userId) === String(userId))) {
-      await Comment.updateOne({ _id: commentId }, { $set: { content: changeval } });
+      await Comment.updateOne({ _id: commentId }, { $set: { content: data } });
       res.status(200).send({
       result: "success",
     });
