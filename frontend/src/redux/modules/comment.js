@@ -41,19 +41,19 @@ const initialState = {
 ////////////////
 // Middleware //
 ////////////////
+const url = "http://3.34.200.72";
 
 // 댓글 모두 불러오기 | GET
 export const getCommentListDB = (postId) => async (dispatch) => {
   try {
-    const { data } = await axios.get("http://3.36.56.155/comments/" + postId);
-    dispatch(getCommentList(data));
-    console.log(data);
+    const { data } = await axios.get(url + "/comments/" + postId);
+    dispatch(getCommentList(data.comments));
+    console.log(data.comments);
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
     console.log(error);
   }
 };
-
 // 댓글 작성하기 | POST
 export const postCommentDB = (_commentObj) => async (dispatch) => {
   const commentObj = {
@@ -64,7 +64,7 @@ export const postCommentDB = (_commentObj) => async (dispatch) => {
   };
   console.log(commentObj);
   try {
-    await axios.post("http://3.36.56.155/comments", commentObj, {
+    await axios.post(url + "/comments", commentObj, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -84,7 +84,7 @@ export const putCommentDB = (commentId, content) => async (dispatch) => {
   };
   console.log(commentObj);
   try {
-    await axios.put("http://3.36.56.155/comments/" + commentObj, {
+    await axios.put(url + "/comments/" + commentObj, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -100,7 +100,7 @@ export const putCommentDB = (commentId, content) => async (dispatch) => {
 export const deleteCommentDB = (commentId) => async (dispatch) => {
   console.log(commentId);
   try {
-    await axios.delete("http://3.36.56.155/comments/" + commentId, commentId, {
+    await axios.delete(url + "/comments/" + commentId, commentId, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

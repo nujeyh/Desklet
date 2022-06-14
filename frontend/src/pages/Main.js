@@ -1,9 +1,10 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import PostCard from "../components/PostCard";
 import { MainBody } from "../components/commonStyle";
+import { getPostListDB } from "../redux/modules/post";
 
 const Main = () => {
   const mainImg = "https://i.ytimg.com/vi/C-8sFlhfosM/maxresdefault.jpg";
@@ -11,6 +12,10 @@ const Main = () => {
     "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/165421782392648651.jpeg?gif=1&w=1440";
 
   const postList = useSelector((state) => state.post.postList);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPostListDB());
+  }, [dispatch]);
 
   return (
     <MainBody>
