@@ -13,6 +13,7 @@ function Upload() {
     const _post = is_edit ? post_list.find((p) => p.postId === id) : null
     const fileInput = useRef(null);
 
+
     const [attachment, setAttachment] = useState(_post ? _post.imgUrl : "")
     const [title, setTitle] = useState(_post ? _post.title : "")
     const [content, setContent] = useState(_post ? _post.content : "");
@@ -39,12 +40,15 @@ function Upload() {
         //     window.alert('내용을 입력해주세요!')
         // }
 
-        const formData = new FormData();
-        formData.append('postImage', fileInput.current.files[0])
-        formData.append('title', title)
-        formData.append('content', content)
+        const file = fileInput.current.files[0];
+        console.log(file);
 
-        // for (var pair of formData.entries()) { console.log(pair[0] + ", " + pair[1]); }
+        const formData = new FormData();
+
+        formData.append("postImage", file);
+        formData.append("title", title);
+        formData.append("content", content);
+        console.log("formData", formData);
 
         dispatch(addPostDB(formData))
     }
@@ -57,11 +61,11 @@ function Upload() {
                 <button>
                     <label htmlFor='file-input'>파일선택</label>
                 </button>
-                <input id="file-input" type="file" accept="img/*" ref={fileInput} onChange={selectImg} style={{ display: "none" }} />
+                <input id="file-input" type="file" accept="img/*" ref={fileInput} onChange={selectImg} style={{ display: "none" }} multiple="multiple" />
                 <img src={attachment ? attachment : "https://user-images.githubusercontent.com/75834421/124501682-fb25fd00-ddfc-11eb-93ec-c0330dff399b.jpg"} alt="" />
             </ImgSection>
-            <TitleInput type="text" placeholder='제목 입력...' value={title} onChange={(e) => setTitle(e.target.value)} />
-            <Textarea rows="8" placeholder="내용 입력..." value={content} onChange={(e) => setContent(e.target.value)} />
+            <TitleInput type="text" placeholder='제목 입력...' value={title} onChange={(e) => setTitle(e.target.value)} multiple="multiple" />
+            <Textarea rows="8" placeholder="내용 입력..." value={content} onChange={(e) => setContent(e.target.value)} multiple="multiple" />
             {is_edit ? (
                 <Btn>수정하기</Btn>
             ) : (

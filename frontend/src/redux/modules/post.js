@@ -8,6 +8,7 @@ import moment from "moment";
 ////////////
 
 const ADD_POST = "ADD_POST";
+const MODIFY_POST = "MODIFY_POST";
 const DELETE_POST = "DELETE_POST";
 const GET_POST_LIST = "GET_POST_LIST";
 const GET_POST_ONE = "GET_POST_ONE";
@@ -17,7 +18,8 @@ const GET_POST_ONE = "GET_POST_ONE";
 ////////////////////
 
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-const deletePost = createAction(DELETE_POST, (postId) => ({ postId }))
+const modifyPost = createAction(MODIFY_POST, (post, postId) => ({ post, postId }))
+const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
 const getPostList = createAction(GET_POST_LIST, (postList) => ({ postList }));
 const getPostOne = createAction(GET_POST_ONE, (postOne) => ({ postOne }));
 
@@ -53,21 +55,15 @@ const initialState = {
 // 게시물 업로드
 export const addPostDB = (formData) => {
   return async function (dispatch, getState) {
-    // const _post = {
-    //   ...initialState.postOne,
-    //   formData,
-    //   createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-    // };
-    await axios.post("http://15.165.160.107/posts", {
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
+    await axios.post("http://15.165.160.107/posts", formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((res) => {
         console.log(res)
-        // dispatch(addPost({ ..._post }))
       })
       .catch((error) => {
         console.log(error)
@@ -75,9 +71,24 @@ export const addPostDB = (formData) => {
   }
 }
 
+// 게시물 수정
+
+export const modifyPostDB = (formData, postId) => {
+  return async function () {
+    await axios.put(`http://15.165.160.107/posts/${postId}`, {
+      data: formData,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+  }
+}
+
+
+// 게시물 삭제
 export const deletePostDB = (postId) => {
   return async function (dispatch) {
-    await axios.delete("http://15.165.160.107/posts", {
+    await axios.delete(`http://15.165.160.107/posts/${postId}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
