@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { MainBody, Hr } from "./commonStyle";
 import { MainBtn, SubBtn } from "../elements/Btn";
 import { logoutDB } from "../redux/modules/user";
-import { useDispatch } from "react-redux";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -32,6 +32,8 @@ const Header = () => {
               <span>{"nickname"}님</span>
               <MainBtn onClick={() => navigate("/upload")}>글쓰기</MainBtn>
               <SubBtn onClick={onClickSignOut}>로그아웃</SubBtn>
+              <MainBtn onClick={() => navigate("/login")}>로그인</MainBtn>
+              <SubBtn onClick={() => navigate("/signup")}>회원가입</SubBtn>
             </nav>
           ) : (
             <nav>
