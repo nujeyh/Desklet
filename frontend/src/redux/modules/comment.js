@@ -29,11 +29,11 @@ const deleteComment = createAction(DELETE_COMMENT, (comment) => comment);
 const initialState = {
   commentList: [
     {
-      postId: "4",
-      content: "내용4",
-      commentId: "id4",
+      postId: "",
+      content: "내용",
+      commentId: "id",
       createdAt: "2022-04-04",
-      nickName: "닉네임4",
+      nickName: "닉네임",
     },
   ],
 };
@@ -48,7 +48,7 @@ export const getCommentListDB = (postId) => async (dispatch) => {
   try {
     const { data } = await axios.get(url + "/comments/" + postId);
     dispatch(getCommentList(data.comments));
-    console.log(data.comments);
+    // console.log(data.comments);
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
     console.log(error);
@@ -66,7 +66,7 @@ export const postCommentDB = (_commentObj) => async (dispatch) => {
   try {
     await axios.post(url + "/comments", commentObj, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     dispatch(postComment(commentObj));
@@ -77,19 +77,21 @@ export const postCommentDB = (_commentObj) => async (dispatch) => {
 };
 
 // 댓글 수정하기 | PUT
-export const putCommentDB = (commentId, content) => async (dispatch) => {
-  const commentObj = {
-    commentId,
-    content,
-  };
+export const putCommentDB = (commentObj) => async (dispatch) => {
   console.log(commentObj);
+  console.log(localStorage.getItem("token"));
   try {
-    await axios.put(url + "/comments/" + commentObj, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    dispatch(putComment(commentId, content));
+    await axios.put(
+      url + "/comments/" + commentObj.commentId,
+      { data: commentObj.content },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    dispatch(putComment(commentObj));
+    console.log(commentObj);
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
     console.log(error);
@@ -100,11 +102,15 @@ export const putCommentDB = (commentId, content) => async (dispatch) => {
 export const deleteCommentDB = (commentId) => async (dispatch) => {
   console.log(commentId);
   try {
-    await axios.delete(url + "/comments/" + commentId, commentId, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    await axios.delete(
+      url + `/comments/${commentId}`, //, commentId
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        data: commentId,
+      }
+    );
     dispatch(deleteComment(commentId));
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
