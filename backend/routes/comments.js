@@ -22,6 +22,8 @@ router.post('/', authMiddleware, async function (req, res) {
     await comment.save();
     res.status(200).send({
       result: "success",
+      _id: comment._id,
+      createdAt: comment.createdAt
     });
   } catch (err) {
     return res.status(400).send({
