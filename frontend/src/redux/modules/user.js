@@ -1,9 +1,7 @@
 // user.js
 import axios from "axios";
-import { setCookie, deleteCookie } from "./Cookie";
 
 // Actions
-
 // const ACCOUNT = "user/ACCOUNT";
 const LOGIN = "user/LOGIN";
 const LOGOUT = "user/LOGOUT";
@@ -92,10 +90,9 @@ export const logincheckDB = () => {
 
 export const logoutDB = () => {
     return function (dispatch) {
-        deleteCookie("token")
-        localStorage.removeItem("userId")
-        localStorage.removeItem("is_login")
+        localStorage.clear()
         dispatch(logOutUser());
+        window.location.assign("/")
     }
 }
 

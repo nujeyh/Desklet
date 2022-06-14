@@ -74,12 +74,19 @@ export const addPostDB = (formData) => {
 // 게시물 수정
 
 export const modifyPostDB = (formData, postId) => {
-  return async function () {
+  return async function (dispatch, getState) {
+    // const post_index = getState().post.postList.findIndex((p) => p.postId === postId)
+    // const _post = getState().post.postList[post_index]
     await axios.put(`http://15.165.160.107/posts/${postId}`, {
       data: formData,
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
+    }).then((res) => {
+      console.log(res);
+      dispatch(modifyPost(formData, postId))
+    }).catch((error) => {
+      console.log(error)
     })
   }
 }
@@ -136,7 +143,15 @@ export default handleActions(
     },
     [DELETE_POST]: (state, action) => {
       produce(state, (draft) => {
-        draft.postList = draft.postList.findIndex((p) => p.postId === action.payload.postId)
+        draft.postList = draft.postList.filter((p) => p.postId !== action.payload.postId)
+      })
+    },
+    [MODIFY_POST]: (state, action) => {
+      produce(state, (draft) => {
+        const index = draft.postList.findIndex((p) =>
+          p.postId === action.payload.postId
+        )
+        draft.postList[index] = { ...draft.postList[index], ...action.payload.post }
       })
     },
     [GET_POST_LIST]: (state, { payload }) =>

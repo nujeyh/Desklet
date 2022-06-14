@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useDispatch } from "react-router-dom";
 
 import { MainBody } from "./commonStyle";
+import { logoutDB } from "../redux/modules/user";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
 
@@ -14,7 +16,7 @@ const Header = () => {
     const confirm = window.confirm("로그아웃 하시겠어요?");
     if (confirm) {
       console.log("로그아웃 클릭");
-      setIsLogin(false);
+      dispatch(logoutDB())
     }
   };
 
@@ -26,7 +28,7 @@ const Header = () => {
           {isLogin ? (
             <nav>
               <span>{"nickname"}님</span>
-              <button onClick={() => console.log("navigate(글쓰기)")}>
+              <button onClick={() => navigate("/upload")}>
                 글쓰기
               </button>
               <button onClick={onClickSignOut}>로그아웃</button>

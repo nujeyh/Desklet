@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 // import Header from '../components/Header'
 import styled from 'styled-components';
-import { addPostDB } from '../redux/modules/post';
+import { addPostDB, modifyPostDB } from '../redux/modules/post';
 
 function Upload() {
     const dispatch = useDispatch();
@@ -32,9 +32,6 @@ function Upload() {
 
     }
 
-
-
-
     const handleUpload = () => {
         // if (content === "" || fileInput === "" || title === "") {
         //     window.alert('내용을 입력해주세요!')
@@ -53,6 +50,20 @@ function Upload() {
         dispatch(addPostDB(formData))
     }
 
+    const handleModify = () => {
+        const file = fileInput.current.files[0];
+        console.log(file);
+
+        const formData = new FormData();
+
+        formData.append("postImage", file);
+        formData.append("title", title);
+        formData.append("content", content);
+        console.log("formData", formData);
+
+        dispatch(addPostDB(formData, modifyPostDB))
+    }
+
     return (
         <UploadSection>
             {/* <Header /> */}
@@ -67,7 +78,7 @@ function Upload() {
             <TitleInput type="text" placeholder='제목 입력...' value={title} onChange={(e) => setTitle(e.target.value)} multiple="multiple" />
             <Textarea rows="8" placeholder="내용 입력..." value={content} onChange={(e) => setContent(e.target.value)} multiple="multiple" />
             {is_edit ? (
-                <Btn>수정하기</Btn>
+                <Btn onClick={handleModify}>수정하기</Btn>
             ) : (
                 <Btn onClick={handleUpload}>작성하기</Btn>
             )}
