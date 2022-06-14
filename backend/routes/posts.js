@@ -4,13 +4,14 @@ const auth = require("../middlewares/auth-middleware")
 const Post = require("../schemas/post")
 const Comment = require("../schemas/comment")
 const multer = require("multer")
+const path = require("path")
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, 'static/')
   },
   filename: function(req, file, cb) {   
-    cb(null, Date.now().file.originalname);
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
 //
@@ -47,15 +48,23 @@ router.post("/", auth, field, async(req, res) => { //posts
   const { userId, nickName } = res.locals.user;
   const { title, content } = req.body; // postImage 기능 검증 후 추가
   const postExist = await Post.find().sort('-postId').limit(1);
+  const obj = JSON.parse(JSON.stringify(req.files));
+  const imageUrl = 'http://3.34.200.72/' + obj.postImage[0].filename
+
+  //const imageUrl = '/home/ubuntu/backend/uploads/' + Date.now() + path.extname(file.originalname)
+  console.log(imageUrl)
+  //const imageUrl = 'http://3.34.200.72/' + obj.postImage[0].path
+  //const imageUrl = 'http://3.34.200.72/' + home/ubuntu/backend/uploads/Date.now().file.originalname
+
   let postId = 0;
-  
+
  if(postExist.length){
     postId = postExist[0]['postId'] + 1
  }else{
     postId = 1
  }
   // 로그인했을때만 작성가능하게
-  await Post.create({ title, content, nickName, userId, createdAt, postId });
+  await Post.create({ title, content, nickName, userId, createdAt, postId, imageUrl});
   // postImage 기능 검증 후 추가
   res.json({ success: "msg"})
 })
@@ -78,7 +87,7 @@ router.get("/:postId", async(req, res) => { //posts/:postId
     const { postId } = req.params;
     const post = await Post.findOne({ postId : postId});
     const comments = await Comment.findOne({ postId : postId});
-    
+    console.log(post)
     res.json({ post, comments}) //comments
 })
 

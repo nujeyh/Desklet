@@ -12,9 +12,10 @@ const PostSchema = mongoose.Schema({
     createdAt: {
         type: String,
     },
-    // postImage: {
-    //     type: String,
-    // },
+    imageUrl: {
+        type: String,
+        required: true
+    },
     nickName: {
         type: String,
     },
