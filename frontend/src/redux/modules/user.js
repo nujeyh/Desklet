@@ -65,11 +65,11 @@ export const loginDB = (email, password) => {
                     })
                 )
                 window.alert("환영합니다!")
-                // window.location.assign("/")
+                window.location.assign("/")
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                window.alert("로그인에 실패했습니다! 다시 시도해주세요요");
+                window.alert("로그인에 실패했습니다! 다시 시도해주세요");
                 console.log(errorCode, errorMessage)
             })
     }
