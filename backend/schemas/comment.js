@@ -34,5 +34,5 @@ const commentSchema = new Schema
     }
   );
   
-const Comments = mongoose.model('Comments', commentSchema);
-module.exports = Comments;
+const Comment = mongoose.model('Comment', commentSchema);
+module.exports = Comment;
