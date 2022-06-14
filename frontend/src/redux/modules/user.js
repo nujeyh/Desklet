@@ -54,7 +54,7 @@ export const loginDB = (email, password) => {
         password: password,
       })
       .then((user) => {
-        console.log(email);
+        console.log(email)
         // const token = user.data.token
         localStorage.setItem("token", user.data.token);
         // setCookie("token", token)
@@ -63,31 +63,19 @@ export const loginDB = (email, password) => {
         dispatch(
           logInUser({
             userId: email,
-
-            password: password,
-        })
-            .then((user) => {
-                console.log(email)
-                // const token = user.data.token
-                localStorage.setItem("token", user.data.token);
-                // setCookie("token", token)
-                // localStorage.setItem("userId", email);
-                // localStorage.setItem("is_login", true);
-                dispatch(
-                    logInUser({
-                        userId: email,
-                    })
-                )
-                window.alert("환영합니다!")
-                window.location.assign("/")
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                window.alert("로그인에 실패했습니다! 다시 시도해주세요");
-                console.log(errorCode, errorMessage)
-            })
-    }
+          })
+        )
+        window.alert("환영합니다!")
+        window.location.assign("/")
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        window.alert("로그인에 실패했습니다! 다시 시도해주세요");
+        console.log(errorCode, errorMessage)
+      })
+  }
 }
+
 
 
 export const logincheckDB = () => {
