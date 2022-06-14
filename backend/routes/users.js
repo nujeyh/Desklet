@@ -16,7 +16,7 @@ router.post("/auth", async (req, res) => {
     });
   }
 
-  const token = jwt.sign({ userId: user.userId }, routes.env.JWT_SECRET_KEY);
+  const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET_KEY);
 
   res.status(200).send({
     result: "success",
