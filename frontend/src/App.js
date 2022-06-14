@@ -16,9 +16,9 @@ import Upload from "./pages/Upload";
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getPostListDB());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getPostListDB());
+  // }, [dispatch]);
   return (
     <>
       <Header />
