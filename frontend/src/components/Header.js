@@ -3,9 +3,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { MainBody } from "./commonStyle";
+import { MainBody, Hr } from "./commonStyle";
+import { MainBtn, SubBtn } from "../elements/Btn";
+import { logoutDB } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
 
@@ -14,7 +18,7 @@ const Header = () => {
     const confirm = window.confirm("로그아웃 하시겠어요?");
     if (confirm) {
       console.log("로그아웃 클릭");
-      setIsLogin(false);
+      dispatch(logoutDB());
     }
   };
 
@@ -26,20 +30,18 @@ const Header = () => {
           {isLogin ? (
             <nav>
               <span>{"nickname"}님</span>
-              <button onClick={() => console.log("navigate(글쓰기)")}>
-                글쓰기
-              </button>
-              <button onClick={onClickSignOut}>로그아웃</button>
+              <MainBtn onClick={() => navigate("/upload")}>글쓰기</MainBtn>
+              <SubBtn onClick={onClickSignOut}>로그아웃</SubBtn>
             </nav>
           ) : (
             <nav>
-              <button onClick={() => navigate("/login")}>로그인</button>
-              <button onClick={() => navigate("/signup")}>회원가입</button>
+              <MainBtn onClick={() => navigate("/login")}>로그인</MainBtn>
+              <SubBtn onClick={() => navigate("/signup")}>회원가입</SubBtn>
             </nav>
           )}
         </HeaderWrap>
       </MainBody>
-      <hr />
+      <Hr />
     </>
   );
 };
@@ -51,6 +53,9 @@ const HeaderWrap = styled.div`
 
   nav {
     margin: auto 0;
+  }
+  span {
+    margin-right: 5px;
   }
 `;
 
