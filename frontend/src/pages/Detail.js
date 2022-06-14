@@ -6,7 +6,10 @@ import styled from "styled-components";
 import Comment from "../components/Comment";
 
 import { MainBody } from "../components/commonStyle";
-import { getCommentListDB, postCommentDB } from "../redux/modules/comment";
+import comment, {
+  getCommentListDB,
+  postCommentDB,
+} from "../redux/modules/comment";
 import { getPostOneDB, deletePostDB } from "../redux/modules/post";
 
 const Detail = () => {
@@ -15,8 +18,9 @@ const Detail = () => {
   const [isOwner, setisOwner] = useState(true);
   const post = useSelector((state) => state.post.postOne);
   const user = useSelector((state) => state.user);
-  console.log(user.user);
+  // console.log(user.user);
   const comments = useSelector((state) => state.comment.commentList);
+  console.log(comments);
   const commentRef = useRef("");
   const navigate = useNavigate();
 
@@ -58,7 +62,7 @@ const Detail = () => {
         )}
       </div>
 
-      <PostImg src={post.imgUrl} alt="post image" />
+      <PostImg src={post.imageUrl} alt="post image" />
 
       <div>{post.createdAt}</div>
       <div>{post.title}</div>

@@ -24,7 +24,7 @@ const PostCard = ({ post }) => {
       </Text>
 
       <CardImg
-        src={post.imgUrl}
+        src={post.imageUrl}
         // src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/projects/165318997066697078.jpg?gif=1&w=1440"
         alt="card image"
       />
