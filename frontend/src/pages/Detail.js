@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import Comment from "../components/Comment";
@@ -14,8 +14,11 @@ const Detail = () => {
   const location = useLocation();
   const [isOwner, setisOwner] = useState(true);
   const post = useSelector((state) => state.post.postOne);
+  const user = useSelector((state) => state.user);
+  console.log(user.user);
   const comments = useSelector((state) => state.comment.commentList);
   const commentRef = useRef("");
+  const navigate = useNavigate();
 
   const postId = location.state.postId;
 
@@ -24,16 +27,14 @@ const Detail = () => {
       postId: postId,
       userId: "userId",
       nickName: "nickName",
-      commentId: "commentId",
       content: commentRef.current.value,
-      createdAt: new Date(),
     };
     dispatch(postCommentDB(commentObj));
   };
 
   const deletePost = () => {
-    dispatch(deletePostDB(postId))
-  }
+    dispatch(deletePostDB(postId));
+  };
 
   useEffect(() => {
     dispatch(getPostOneDB(postId));
@@ -45,7 +46,13 @@ const Detail = () => {
         <span>{post.nickName}</span>
         {isOwner && (
           <>
-            <button>수정</button>
+            <button
+              onClick={() => {
+                navigate(`/edit/${postId}`);
+              }}
+            >
+              수정
+            </button>
             <button onClick={deletePost}>삭제</button>
           </>
         )}
@@ -62,7 +69,7 @@ const Detail = () => {
       </div>
       <div>
         {comments.map((comment) => {
-          return <Comment comment={comment} key={comment.commentId} />;
+          return <Comment key={comment.commentId} comment={comment} />;
         })}
       </div>
     </MainBody>
