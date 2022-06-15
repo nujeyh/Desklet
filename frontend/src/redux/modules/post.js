@@ -54,7 +54,8 @@ const initialState = {
 ////////////////
 // Middleware //
 ////////////////
-const url = "http://3.34.200.72";
+const url = "http://3.34.45.167";
+// const url = "http://3.34.200.72";
 // 게시물 업로드
 export const addPostDB = (formData) => {
   return async function (dispatch, getState) {
@@ -83,13 +84,14 @@ export const modifyPostDB = (formData, postId) => {
     await axios
       .put(url + `/posts/${postId}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((res) => {
         console.log(res);
         dispatch(modifyPost(formData, postId));
+        // window.location.assign("/")
       })
       .catch((error) => {
         console.log(error);

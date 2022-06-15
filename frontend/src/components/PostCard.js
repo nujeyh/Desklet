@@ -11,7 +11,7 @@ const PostCard = ({ post }) => {
   return (
     <CardWrap
       onClick={() =>
-        navigate("/posts/" + post._id, {
+        navigate("/posts/" + post.postId, {
           state: {
             postId: post.postId,
           },
