@@ -23,7 +23,9 @@ export function logOutUser(user) {
 }
 
 // middlewares
-const url = "http://3.34.200.72";
+const url = "http://3.34.45.167";
+// "http://3.34.200.72";
+
 export const signupDB = (email, nickname, password) => {
   return async function (dispatch, getState) {
     await axios
@@ -63,32 +65,19 @@ export const loginDB = (email, password) => {
         dispatch(
           logInUser({
             userId: email,
-
-            password: password,
-        })
-            .then((user) => {
-                console.log(email)
-                // const token = user.data.token
-                localStorage.setItem("token", user.data.token);
-                // setCookie("token", token)
-                // localStorage.setItem("userId", email);
-                // localStorage.setItem("is_login", true);
-                dispatch(
-                    logInUser({
-                        userId: email,
-                    })
-                )
-                window.alert("환영합니다!")
-                window.location.assign("/")
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                window.alert("로그인에 실패했습니다! 다시 시도해주세요");
-                console.log(errorCode, errorMessage)
-            })
-    }
-}
-
+          })
+        );
+        window.alert("환영합니다!");
+        window.location.assign("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        window.alert("로그인에 실패했습니다! 다시 시도해주세요");
+        console.log(errorCode, errorMessage);
+      });
+  };
+};
 
 export const logincheckDB = () => {
   return function (dispatch) {

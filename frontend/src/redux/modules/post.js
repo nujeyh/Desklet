@@ -54,7 +54,9 @@ const initialState = {
 ////////////////
 // Middleware //
 ////////////////
-const url = "http://3.34.200.72";
+const url = "http://3.34.45.167";
+// "http://3.34.200.72";
+
 // 게시물 업로드
 export const addPostDB = (formData) => {
   return async function (dispatch, getState) {
@@ -80,13 +82,19 @@ export const modifyPostDB = (formData, postId) => {
   return async function (dispatch, getState) {
     // const post_index = getState().post.postList.findIndex((p) => p.postId === postId)
     // const _post = getState().post.postList[post_index]
+    for (let key of formData.keys()) {
+      console.log(key, ":", formData.get(key));
+    }
     await axios
-      .put(url + `/posts/${postId}`, {
-        data: formData,
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .put(
+        url + `/posts/${postId}`,
+        { data: formData },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         dispatch(modifyPost(formData, postId));
@@ -132,7 +140,7 @@ export const getPostOneDB = (postId) => async (dispatch) => {
   try {
     const { data } = await axios.get(url + "/posts/" + postId);
     dispatch(getPostOne(data.post));
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
     console.log(error);
