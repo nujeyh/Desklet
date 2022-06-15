@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { loginDB } from '../redux/modules/user';
-// import { loginUser } from '../redux/modules/userSlice';
 
 function Login() {
     const dispatch = useDispatch();
@@ -29,13 +28,14 @@ function Login() {
             window.alert("이메일,비밀번호 모두 입력해주세요.")
         }
         if (!emailCheck) {
-            window.alert("이메일 형식에 맞게 작성해주세요요")
+            window.alert("이메일 형식에 맞게 작성해주세요")
         }
         if (!passwordCheck(password)) {
             window.alert('비밀번호를 형식에 맞게 입력해주세요')
         }
         dispatch(loginDB(email, password))
     }
+
     return (
         <AccountSection>
             <FormSection>

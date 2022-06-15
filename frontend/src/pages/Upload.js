@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-// import Header from '../components/Header'
 import styled from "styled-components";
 import { addPostDB, modifyPostDB } from "../redux/modules/post";
 
