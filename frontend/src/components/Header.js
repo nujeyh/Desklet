@@ -53,6 +53,10 @@ const HeaderWrap = styled.div`
   flex-direction: row;
   justify-content: space-between;
 
+  h2 {
+    cursor: pointer;
+  }
+
   nav {
     margin: auto 0;
   }
