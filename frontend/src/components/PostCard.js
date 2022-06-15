@@ -25,8 +25,14 @@ const PostCard = ({ post }) => {
 
       <CardImg src={post.imageUrl} alt="card image" />
 
-      <Title>{post.title}</Title>
-      <Text style={{ width: "100%" }}>{post.content}</Text>
+      <Title>
+        {post.title.substr(0, 20)}
+        {post.title > 20 ? "..." : ""}
+      </Title>
+      <Text style={{ width: "100%" }}>
+        {post.content.substr(0, 65)}
+        {post.content > 65 ? "..." : ""}
+      </Text>
     </CardWrap>
   );
 };
