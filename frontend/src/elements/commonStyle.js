@@ -4,12 +4,15 @@ import styled, { css } from "styled-components";
 export const MainBody = styled.div`
   width: 70%;
   margin: 10px auto;
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 900px) {
     width: 95%;
   }
 `;
-export const Padding = css`
-  padding: 1em;
+export const Width = css`
+  max-width: 500px;
+  @media screen and (width: 900) {
+    max-width: 500px;
+  }
 `;
 
 // 연한 회색 수평선
@@ -28,9 +31,3 @@ export const BoxShadow = css`
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
   }
 `;
-
-///////////
-// Input //
-///////////
-
-export const Input = css``;
