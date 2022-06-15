@@ -120,22 +120,28 @@ const Input = styled.input`
   box-sizing: border-box;
   padding: 10px;
   margin-bottom: 20px;
-  border: 1px solid rgba(27, 156, 252, 0.55);
+  border: 2px solid  #e6e3e3;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 4px 0 rgb(64 60 67 / 16%);
   &:focus {
       outline:none;
-      border-color: #1B9CFC;
+      border-color: #666666;
   }
 `
 
 const UserBtn = styled.button`
   width: 40%;
-  background-color:${(props) => props.disabled ? "rgba(27, 156, 252, 0.55)" : "#1B9CFC "};
+  background-color:#000000;
   color: white;
   border: none;
   cursor: pointer;
   height: 40px;
   border-radius: 6px;
   margin: 10px 0;
+  transition: all 0.5s;
+  &:hover {
+    background-color: #666666;
+  }
 `
 
 const AccountSection = styled.div`

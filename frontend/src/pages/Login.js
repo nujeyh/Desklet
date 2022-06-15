@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { loginDB } from '../redux/modules/user';
 // import { loginUser } from '../redux/modules/userSlice';
 
 function Login() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
@@ -48,7 +50,7 @@ function Login() {
                 </label>
                 <UserBtn onClick={handleLogin}>로그인</UserBtn>
                 <LoginZoneText>계정이 없으신가요?</LoginZoneText>
-                <UserBtn>회원가입</UserBtn>
+                <UserBtn onClick={() => { navigate("/signup") }}>회원가입</UserBtn>
             </FormSection>
         </AccountSection>
     )
@@ -58,7 +60,6 @@ const FormSection = styled.div`
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   max-width: 450px;
   width: 100%;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content:center;
@@ -104,22 +105,28 @@ const Input = styled.input`
   box-sizing: border-box;
   padding: 10px;
   margin-bottom: 20px;
-  border: 2px solid rgba(27, 156, 252, 0.55);
+  box-shadow: inset 0 1px 4px 0 rgb(64 60 67 / 16%);
+  border: 2px solid  #e6e3e3;
+  border-radius: 6px;
   &:focus {
       outline:none;
-      border-color: #1B9CFC;
+      border-color: #666666;
   }
 `
 
 const UserBtn = styled.button`
   width: 40%;
-  background-color:${(props) => props.disabled ? "rgba(27, 156, 252, 0.55)" : "#1B9CFC "};
+  background-color:#000000;
   color: white;
   border: none;
   cursor: pointer;
   height: 40px;
   border-radius: 6px;
   margin: 10px 0;
+  transition: all 0.5s;
+  &:hover {
+    background-color: #666666;
+  }
 `
 
 const AccountSection = styled.div`
