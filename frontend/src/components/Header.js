@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { MainBody, Hr } from "./commonStyle";
+import { MainBody, Hr } from "../elements/commonStyle";
 import { MainBtn, SubBtn } from "../elements/Btn";
 import { logoutDB } from "../redux/modules/user";
 
