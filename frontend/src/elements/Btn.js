@@ -29,3 +29,15 @@ export const SubBtn = styled.button`
     background-color: #e6e3e3;
   }
 `;
+// 작은 버튼
+export const SmallBtn = styled.button`
+  cursor: pointer;
+  transition: all 0.5s;
+  background-color: white;
+  border: 0;
+  color: gray;
+  font-size: medium;
+  &:hover {
+    color: black;
+  }
+`;
