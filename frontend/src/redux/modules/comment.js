@@ -29,11 +29,11 @@ const deleteComment = createAction(DELETE_COMMENT, (comment) => comment);
 const initialState = {
   commentList: [
     {
-      postId: "4",
-      content: "내용4",
-      commentId: "id4",
+      postId: "",
+      content: "내용",
+      commentId: "id",
       createdAt: "2022-04-04",
-      nickName: "닉네임4",
+      nickName: "닉네임",
     },
   ],
 };
@@ -41,19 +41,21 @@ const initialState = {
 ////////////////
 // Middleware //
 ////////////////
-const url = "http://3.34.200.72";
+const url = "http://3.34.45.167";
+// "http://3.34.200.72";
 
 // 댓글 모두 불러오기 | GET
 export const getCommentListDB = (postId) => async (dispatch) => {
   try {
     const { data } = await axios.get(url + "/comments/" + postId);
     dispatch(getCommentList(data.comments));
-    console.log(data.comments);
+    // console.log(data.comments);
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
     console.log(error);
   }
 };
+
 // 댓글 작성하기 | POST
 export const postCommentDB = (_commentObj) => async (dispatch) => {
   const commentObj = {
@@ -62,14 +64,17 @@ export const postCommentDB = (_commentObj) => async (dispatch) => {
     nickName: _commentObj.nickName,
     content: _commentObj.content,
   };
-  console.log(commentObj);
+  // console.log(commentObj);
   try {
-    await axios.post(url + "/comments", commentObj, {
+    const { data } = await axios.post(url + "/comments", commentObj, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    dispatch(postComment(commentObj));
+    // console.log(data);
+    dispatch(
+      postComment({ ...commentObj, createdAt: data.createdAt, _id: data._id })
+    );
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
     console.log(error);
@@ -77,19 +82,18 @@ export const postCommentDB = (_commentObj) => async (dispatch) => {
 };
 
 // 댓글 수정하기 | PUT
-export const putCommentDB = (commentId, content) => async (dispatch) => {
-  const commentObj = {
-    commentId,
-    content,
-  };
-  console.log(commentObj);
+export const putCommentDB = (commentObj) => async (dispatch) => {
   try {
-    await axios.put(url + "/comments/" + commentObj, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    dispatch(putComment(commentId, content));
+    await axios.put(
+      url + "/comments/" + commentObj._id,
+      { data: commentObj.content },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    dispatch(putComment(commentObj));
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
     console.log(error);
@@ -97,15 +101,15 @@ export const putCommentDB = (commentId, content) => async (dispatch) => {
 };
 
 // 댓글 삭제하기 | DELETE
-export const deleteCommentDB = (commentId) => async (dispatch) => {
-  console.log(commentId);
+export const deleteCommentDB = (_id) => async (dispatch) => {
   try {
-    await axios.delete(url + "/comments/" + commentId, commentId, {
+    await axios.delete(url + "/comments/" + _id, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${localStorage.getItem("token")}`,
       },
+      data: _id,
     });
-    dispatch(deleteComment(commentId));
+    dispatch(deleteComment(_id));
   } catch (error) {
     alert("오류가 발생했습니다. 다시 시도해주세요.");
     console.log(error);
@@ -130,7 +134,8 @@ export default handleActions(
     [PUT_COMMENT]: (state, { payload }) =>
       produce(state, (draft) => {
         draft.commentList = state.commentList.map((comment) => {
-          if (comment.commentId === payload.commentId) {
+          console.log(comment._id, payload._id, payload);
+          if (comment._id === payload._id) {
             return { ...comment, content: payload.content };
           } else {
             return comment;
@@ -140,7 +145,7 @@ export default handleActions(
     [DELETE_COMMENT]: (state, { payload }) =>
       produce(state, (draft) => {
         draft.commentList = draft.commentList.filter(
-          (comment) => comment.commentId !== payload
+          (comment) => comment._id !== payload
         );
       }),
   },

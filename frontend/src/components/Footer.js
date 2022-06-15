@@ -1,7 +1,7 @@
 import React from "react";
 // import styled from "styled-components";
 
-import { MainBody, Hr } from "./commonStyle";
+import { MainBody, Hr } from "../elements/commonStyle";
 
 const Footer = () => {
   return (

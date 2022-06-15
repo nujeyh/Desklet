@@ -24,6 +24,8 @@ export function logOutUser(user) {
 
 // middlewares
 const url = "http://3.34.45.167";
+// "http://3.34.200.72";
+
 export const signupDB = (email, nickname, password) => {
   return async function (dispatch, getState) {
     await axios
