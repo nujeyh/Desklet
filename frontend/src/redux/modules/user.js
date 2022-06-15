@@ -7,7 +7,7 @@ const LOGIN = "user/LOGIN";
 const LOGOUT = "user/LOGOUT";
 
 const initialState = {
-  user: null,
+  user: { user: null, nickName: null },
   is_login: false,
 };
 
@@ -56,39 +56,46 @@ export const loginDB = (email, password) => {
         password: password,
       })
       .then((user) => {
-        console.log(email)
+        // console.log(email);
         // const token = user.data.token
         localStorage.setItem("token", user.data.token);
         // setCookie("token", token)
-        // localStorage.setItem("userId", email);
+        localStorage.setItem("userId", email);
+        localStorage.setItem("nickName", user.data.nickName);
+        console.log(user.data);
         // localStorage.setItem("is_login", true);
         dispatch(
           logInUser({
             userId: email,
+            nickName: user.data.nickName,
           })
-        )
-        window.alert("환영합니다!")
-        window.location.assign("/")
-      }).catch((error) => {
+        );
+        window.alert("환영합니다!");
+        // window.location.assign("/");
+      })
+      .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         window.alert("로그인에 실패했습니다! 다시 시도해주세요");
-        console.log(errorCode, errorMessage)
-      })
-  }
-}
+        console.log(errorCode, errorMessage);
+      });
+  };
+};
 
-
-
-export const logincheckDB = () => {
+export const loginCheck = () => {
   return function (dispatch) {
     const userId = localStorage.getItem("userId");
-    const tokenCheck = document.cookie;
-    if (tokenCheck) {
-      dispatch(logInUser({ userId: userId }));
-    } else {
-      dispatch(logOutUser());
+    const nickName = localStorage.getItem("nickName");
+    if (userId) {
+      dispatch(logInUser({ userId, nickName }));
     }
+
+    // const tokenCheck = document.cookie;
+    // if (tokenCheck) {
+    //   dispatch(logInUser({ userId: userId }));
+    // } else {
+    //   dispatch(logOutUser());
+    // }
   };
 };
 
@@ -121,7 +128,6 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOGIN:
       state.user = { ...action.user };
-      console.log(state.user);
       state.is_login = true;
       return state;
     case LOGOUT:
