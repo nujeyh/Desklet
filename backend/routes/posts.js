@@ -4,7 +4,7 @@ const auth = require("../middlewares/auth-middleware")
 const Post = require("../schemas/post")
 const Comment = require("../schemas/comment")
 const multer = require("multer")
-const path = require("path");
+const path = require("path")
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -43,7 +43,7 @@ const field = upload.fields([{ name: "title"}, {name: "content"}, {name: "postIm
 // 게시물작성
 router.post("/", auth, field, async(req, res) => { //posts
   console.log(req.body);
-  console.log(req.file);
+  console.log(req.files);
   const createdAt = new Date().toLocaleString();
   const { userId, nickName } = res.locals.user;
   const { title, content } = req.body; // postImage 기능 검증 후 추가
