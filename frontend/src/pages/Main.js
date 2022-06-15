@@ -5,7 +5,6 @@ import styled, { css } from "styled-components";
 import PostCard from "../components/PostCard";
 import { getPostListDB } from "../redux/modules/post";
 
-// style
 import { MainBody } from "../elements/commonStyle";
 
 // 메인 페이지
@@ -13,8 +12,8 @@ const Main = () => {
   const mainImg = "/images/black_desk.jpg";
   const subImg = "/images/white_desk.jpg";
 
-  const postList = useSelector((state) => state.post.postList);
   const dispatch = useDispatch();
+  const postList = useSelector((state) => state.post.postList);
 
   useEffect(() => {
     dispatch(getPostListDB());
@@ -31,8 +30,8 @@ const Main = () => {
         <MidWrap>
           <h2>👇 다른 사람들 책상 구경하기 👇</h2>
         </MidWrap>
-        {postList.map((post) => {
-          return <PostCard post={post} key={post._id} />;
+        {postList.map((post, index) => {
+          return <PostCard post={post} key={index} />;
         })}
       </MainGrid>
     </MainBody>

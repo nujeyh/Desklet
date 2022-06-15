@@ -54,8 +54,8 @@ const initialState = {
 ////////////////
 // Middleware //
 ////////////////
+
 const url = "http://3.34.45.167";
-// const url = "http://3.34.200.72";
 
 // 게시물 업로드
 export const addPostDB = (formData) => {
@@ -137,9 +137,8 @@ export const getPostListDB = () => async (dispatch) => {
   try {
     const { data } = await axios.get(url + "/posts");
     dispatch(getPostList(data.post));
-    console.log(data.post);
   } catch (error) {
-    alert("오류가 발생했습니다. 다시 시도해주세요.");
+    alert("게시물을 불러오는 중에 오류가 발생했습니다.");
     console.log(error);
   }
 };
@@ -149,9 +148,8 @@ export const getPostOneDB = (postId) => async (dispatch) => {
   try {
     const { data } = await axios.get(url + "/posts/" + postId);
     dispatch(getPostOne(data.post));
-    // console.log(data);
   } catch (error) {
-    alert("오류가 발생했습니다. 다시 시도해주세요.");
+    alert("게시물을 불러오는 중에 오류가 발생했습니다.");
     console.log(error);
   }
 };
