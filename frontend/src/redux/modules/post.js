@@ -1,13 +1,12 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
-import moment from "moment";
 
 ////////////
 // Action //
 ////////////
 
-const ADD_POST = "ADD_POST";
+// const ADD_POST = "ADD_POST";
 const MODIFY_POST = "MODIFY_POST";
 const DELETE_POST = "DELETE_POST";
 const GET_POST_LIST = "GET_POST_LIST";
@@ -17,7 +16,6 @@ const GET_POST_ONE = "GET_POST_ONE";
 // Action Creator //
 ////////////////////
 
-const addPost = createAction(ADD_POST, (post) => ({ post }));
 const modifyPost = createAction(MODIFY_POST, (post, postId) => ({
   post,
   postId,
@@ -68,7 +66,6 @@ export const addPostDB = (formData) => {
         },
       })
       .then((res) => {
-        console.log(res);
         window.location.assign("/")
       })
       .catch((error) => {
@@ -81,11 +78,9 @@ export const addPostDB = (formData) => {
 
 export const modifyPostDB = (formData, postId) => {
   return async function (dispatch, getState) {
-    // const post_index = getState().post.postList.findIndex((p) => p.postId === postId)
-    // const _post = getState().post.postList[post_index]
-    for (let key of formData.keys()) {
-      console.log(key, ":", formData.get(key));
-    }
+    // for (let key of formData.keys()) {
+    //   console.log(key, ":", formData.get(key));
+    // }
     await axios
       .put(url + `/posts/${postId}`, formData, {
         headers: {
@@ -93,16 +88,6 @@ export const modifyPostDB = (formData, postId) => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      // .put(
-      //   url + `/posts/${postId}`,
-      //   { data: formData },
-      //   {
-      //     headers: {
-      //       "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-      //       authorization: `Bearer ${localStorage.getItem("token")}`,
-      //     },
-      //   }
-      // )
       .then((res) => {
         console.log(res);
         dispatch(modifyPost(formData, postId));
@@ -163,11 +148,11 @@ export const getPostOneDB = (postId) => async (dispatch) => {
 
 export default handleActions(
   {
-    [ADD_POST]: (state, action) => {
-      produce(state, (draft) => {
-        draft.postList.unshift(action.payload.post);
-      });
-    },
+    // [ADD_POST]: (state, action) => {
+    //   produce(state, (draft) => {
+    //     draft.postList.unshift(action.payload.post);
+    //   });
+    // },
     [DELETE_POST]: (state, action) => {
       produce(state, (draft) => {
         draft.postList = draft.postList.filter(

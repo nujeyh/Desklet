@@ -8,11 +8,8 @@ import { addPostDB, modifyPostDB } from "../redux/modules/post";
 function Upload() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log(id)
   const is_edit = id ? true : false;
   const post_list = useSelector((state) => state.post.postOne);
-  // const _post = is_edit ? post_list.postId : null;
-  // console.log(_post)
   const fileInput = useRef(null);
 
   const [attachment, setAttachment] = useState(post_list ? post_list.imageUrl : "");
@@ -23,7 +20,6 @@ function Upload() {
   const selectImg = (e) => {
     const reader = new FileReader();
     const theFile = fileInput.current.files[0];
-    console.log(theFile);
     reader.readAsDataURL(theFile);
     reader.onloadend = (finishiedEvent) => {
       const {
@@ -39,7 +35,6 @@ function Upload() {
     }
 
     const file = fileInput.current.files[0];
-    console.log(file);
 
     const formData = new FormData();
 
@@ -53,24 +48,21 @@ function Upload() {
 
   const handleModify = () => {
     const file = fileInput.current.files[0];
-    console.log(file);
 
     const formData = new FormData();
 
     formData.append("postImage", file);
     formData.append("title", title);
     formData.append("content", content);
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ', ' + pair[1]);
+    // }
 
     dispatch(modifyPostDB(formData, id));
-    console.log(post_list)
   };
 
   return (
     <UploadSection>
-      {/* <Header /> */}
       <BorderSection>
         <p>{post_list.nickName}님의 데스크 셋업을 소개해보세요 ✨</p>
         <ImgSection>
@@ -92,7 +84,7 @@ function Upload() {
                 ? attachment
                 : "https://user-images.githubusercontent.com/75834421/124501682-fb25fd00-ddfc-11eb-93ec-c0330dff399b.jpg"
             }
-            alt=""
+            alt="업로드할 이미지"
           />
         </ImgSection>
         <TitleInput
