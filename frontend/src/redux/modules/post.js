@@ -91,7 +91,7 @@ export const modifyPostDB = (formData, postId) => {
       .then((res) => {
         console.log(res);
         dispatch(modifyPost(formData, postId));
-        // window.location.assign("/")
+        window.location.assign("/")
       })
       .catch((error) => {
         console.log(error);
@@ -110,6 +110,7 @@ export const deletePostDB = (postId) => {
       })
       .then((res) => {
         dispatch(deletePost(postId));
+        window.location.assign("/")
       })
       .catch((error) => {
         console.log(error);
