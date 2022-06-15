@@ -54,6 +54,10 @@ const HeaderWrap = styled.div`
   justify-content: space-between;
   padding: 10px 0;
 
+  h2 {
+    cursor: pointer;
+  }
+
   nav {
     margin: auto 0;
   }
