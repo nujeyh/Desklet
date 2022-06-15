@@ -4,7 +4,7 @@ const auth = require("../middlewares/auth-middleware")
 const Post = require("../schemas/post")
 const Comment = require("../schemas/comment")
 const multer = require("multer")
-const path = require("path")
+const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   }
 });
-//
+
 const upload = multer({storage: storage});
 
 // 게시물 작성
@@ -43,18 +43,13 @@ const field = upload.fields([{ name: "title"}, {name: "content"}, {name: "postIm
 // 게시물작성
 router.post("/", auth, field, async(req, res) => { //posts
   console.log(req.body);
-  console.log(req.files);
+  console.log(req.file);
   const createdAt = new Date().toLocaleString();
   const { userId, nickName } = res.locals.user;
   const { title, content } = req.body; // postImage 기능 검증 후 추가
   const postExist = await Post.find().sort('-postId').limit(1);
   const obj = JSON.parse(JSON.stringify(req.files));
-  const imageUrl = 'http://3.34.200.72/' + obj.postImage[0].filename
-
-  //const imageUrl = '/home/ubuntu/backend/uploads/' + Date.now() + path.extname(file.originalname)
-  console.log(imageUrl)
-  //const imageUrl = 'http://3.34.200.72/' + obj.postImage[0].path
-  //const imageUrl = 'http://3.34.200.72/' + home/ubuntu/backend/uploads/Date.now().file.originalname
+  const imageUrl = 'http://3.34.45.167/' + obj.postImage[0].filename
 
   let postId = 0;
 
@@ -71,12 +66,8 @@ router.post("/", auth, field, async(req, res) => { //posts
 
 //전체 게시물 조회
 router.get("/", async(req, res) => { //posts
-    // const { title, content, createdAt, nickName, postImage, postId } = req.query; // objectId추가
-    // // const postId = await Post.find(postId : _i) 협의후 추가
 
-    // const post = await Post.find({title, content, createdAt, nickName, postImage, postId })
-
-    const post = await Post.find();
+    const post = await Post.find().sort('-postId');
 
     res.send({post: post});
 });
@@ -94,11 +85,14 @@ router.get("/:postId", async(req, res) => { //posts/:postId
 //게시글 삭제
 router.delete("/:postId", auth, async(req, res) => { // /posts/:postId
     const { postId } = req.params //req.params; 
-    const { user } = res.locals;
+    const user = res.locals.user;
+    console.log(user)
     const userId = user["userId"]  //user["userId"];
+    console.log(userId)
 
     const existPost = await Post.find({ postId: postId});
-    const existComment = await Comment.findOne({ postId });
+    const existComment = await Comment.find({ postId:postId });
+    console.log("코멘트입니다:", existComment)
     
     if(userId === existPost[0]['userId']) {
          if(existPost&& existComment) { 
@@ -116,26 +110,33 @@ router.delete("/:postId", auth, async(req, res) => { // /posts/:postId
 });
 
 //게시글 수정
-router.put("/:postId", auth, async(req, res) => { ///posts/:postId
+router.put("/:postId", auth, upload.single("postImage"), async(req, res) => { ///posts/:postId
     const { postId } = req.params;
+    const user = res.locals.user;
+    const userId = user.userId
+
+    const { title, content } = req.body
     
-    const { user } = res.locals;
-
-    const { title, content, nickName, postImage } = req.body;
-
-    const userId = user["userId"];
+    // const obj = JSON.parse(JSON.stringify(req.file));
+    // console.log("obj입니다:", obj)
+    // const value = Object.values(obj)
+    // const imageUrl = 'http://3.34.45.167/' + value.splice(5,1)
+    // console.log("imgaUrl 입니다:", imageUrl);
     const existPost = await Post.findOne({postId:postId});
-
+    
+    const imageUrl = 'http://3.34.45.167/' + req.file.path.split('/')[1]
+    
     if(userId === existPost.userId) {
         if(existPost) {
-        await Post.updateOne({postId: postId}, { $set: {title, content, postImage, nickName}});
+        await Post.updateOne({postId: postId}, { $set: {title, content, imageUrl }});
+
         res.send({ result: "success"})
         } else {
             res.status(400).send({ result: "fail"})
         }
     } else {
-        res.send({ reselt :  "fail "})
+        res.send({ result :  "fail "})
     }
-})
 
+})
 module.exports = router;
