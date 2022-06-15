@@ -69,6 +69,7 @@ export const addPostDB = (formData) => {
       })
       .then((res) => {
         console.log(res);
+        window.location.assign("/")
       })
       .catch((error) => {
         console.log(error);

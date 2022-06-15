@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 // import Header from '../components/Header'
@@ -6,118 +6,118 @@ import styled from "styled-components";
 import { addPostDB, modifyPostDB } from "../redux/modules/post";
 
 function Upload() {
-    const dispatch = useDispatch();
-    const { id } = useParams();
-    console.log(id)
-    const is_edit = id ? true : false;
-    const post_list = useSelector((state) => state.post.postOne);
-    // const _post = is_edit ? post_list.postId : null;
-    // console.log(_post)
-    const fileInput = useRef(null);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  console.log(id)
+  const is_edit = id ? true : false;
+  const post_list = useSelector((state) => state.post.postOne);
+  // const _post = is_edit ? post_list.postId : null;
+  // console.log(_post)
+  const fileInput = useRef(null);
 
-    const [attachment, setAttachment] = useState(post_list ? post_list.imageUrl : "");
-    const [title, setTitle] = useState(post_list ? post_list.title : "");
-    const [content, setContent] = useState(post_list ? post_list.content : "");
+  const [attachment, setAttachment] = useState(post_list ? post_list.imageUrl : "");
+  const [title, setTitle] = useState(post_list ? post_list.title : "");
+  const [content, setContent] = useState(post_list ? post_list.content : "");
 
 
-    const selectImg = (e) => {
-        const reader = new FileReader();
-        const theFile = fileInput.current.files[0];
-        console.log(theFile);
-        reader.readAsDataURL(theFile);
-        reader.onloadend = (finishiedEvent) => {
-            const {
-                currentTarget: { result },
-            } = finishiedEvent;
-            setAttachment(result);
-        };
+  const selectImg = (e) => {
+    const reader = new FileReader();
+    const theFile = fileInput.current.files[0];
+    console.log(theFile);
+    reader.readAsDataURL(theFile);
+    reader.onloadend = (finishiedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishiedEvent;
+      setAttachment(result);
     };
+  };
 
-    const handleUpload = () => {
-        if (content === "" || fileInput === "" || title === "") {
-            window.alert('내용을 입력해주세요!')
+  const handleUpload = () => {
+    if (content === "" || fileInput === "" || title === "") {
+      window.alert('내용을 입력해주세요!')
+    }
+
+    const file = fileInput.current.files[0];
+    console.log(file);
+
+    const formData = new FormData();
+
+    formData.append("postImage", file);
+    formData.append("title", title);
+    formData.append("content", content);
+    console.log("formData", formData);
+
+    dispatch(addPostDB(formData));
+  };
+
+  const handleModify = () => {
+    const file = fileInput.current.files[0];
+    console.log(file);
+
+    const formData = new FormData();
+
+    formData.append("postImage", file);
+    formData.append("title", title);
+    formData.append("content", content);
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+
+    dispatch(modifyPostDB(formData, id));
+    console.log(post_list)
+  };
+
+  return (
+    <UploadSection>
+      {/* <Header /> */}
+      <BorderSection>
+        <p>{post_list.nickName}님의 데스크 셋업을 소개해보세요 ✨</p>
+        <ImgSection>
+          <button>
+            <label htmlFor="file-input">파일선택</label>
+          </button>
+          <input
+            id="file-input"
+            type="file"
+            accept="img/*"
+            ref={fileInput}
+            onChange={selectImg}
+            style={{ display: "none" }}
+            multiple="multiple"
+          />
+          <img
+            src={
+              attachment
+                ? attachment
+                : "https://user-images.githubusercontent.com/75834421/124501682-fb25fd00-ddfc-11eb-93ec-c0330dff399b.jpg"
+            }
+            alt=""
+          />
+        </ImgSection>
+        <TitleInput
+          type="text"
+          placeholder="제목 입력..."
+          defaultValue={title}
+          onChange={(e) => setTitle(e.target.value)}
+          multiple="multiple"
+        />
+        <Textarea
+          rows="8"
+          placeholder="내용 입력..."
+          defaultValue={content}
+          onChange={(e) => setContent(e.target.value)}
+          multiple="multiple"
+        />
+        {is_edit ? (
+          <Btn onClick={handleModify}>수정하기</Btn>
+        ) : (
+          <Btn onClick={handleUpload}>작성하기</Btn>
+        )
         }
-
-        const file = fileInput.current.files[0];
-        console.log(file);
-
-        const formData = new FormData();
-
-        formData.append("postImage", file);
-        formData.append("title", title);
-        formData.append("content", content);
-        console.log("formData", formData);
-
-        dispatch(addPostDB(formData));
-    };
-
-    const handleModify = () => {
-        const file = fileInput.current.files[0];
-        console.log(file);
-
-        const formData = new FormData();
-
-        formData.append("postImage", file);
-        formData.append("title", title);
-        formData.append("content", content);
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
-
-        dispatch(modifyPostDB(formData, id));
-        console.log(post_list)
-    };
-
-    return (
-        <UploadSection>
-            {/* <Header /> */}
-            <BorderSection>
-                <p>{post_list.nickName}님의 데스크 셋업을 소개해보세요 ✨</p>
-                <ImgSection>
-                    <button>
-                        <label htmlFor="file-input">파일선택</label>
-                    </button>
-                    <input
-                        id="file-input"
-                        type="file"
-                        accept="img/*"
-                        ref={fileInput}
-                        onChange={selectImg}
-                        style={{ display: "none" }}
-                        multiple="multiple"
-                    />
-                    <img
-                        src={
-                            attachment
-                                ? attachment
-                                : "https://user-images.githubusercontent.com/75834421/124501682-fb25fd00-ddfc-11eb-93ec-c0330dff399b.jpg"
-                        }
-                        alt=""
-                    />
-                </ImgSection>
-                <TitleInput
-                    type="text"
-                    placeholder="제목 입력..."
-                    defaultValue={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    multiple="multiple"
-                />
-                <Textarea
-                    rows="8"
-                    placeholder="내용 입력..."
-                    defaultValue={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    multiple="multiple"
-                />
-                {is_edit ? (
-                    <Btn onClick={handleModify}>수정하기</Btn>
-                ) : (
-                    <Btn onClick={handleUpload}>작성하기</Btn>
-                )
-                }
-            </BorderSection>
-        </UploadSection >
-    );
+      </BorderSection>
+    </UploadSection >
+  );
 }
 
 const UploadSection = styled.section`
