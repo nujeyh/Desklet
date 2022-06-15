@@ -2,7 +2,6 @@
 import axios from "axios";
 
 // Actions
-// const ACCOUNT = "user/ACCOUNT";
 const LOGIN = "user/LOGIN";
 const LOGOUT = "user/LOGOUT";
 
@@ -12,9 +11,6 @@ const initialState = {
 };
 
 // Action Creators
-// export function accountUser(user) {
-//     return { type: ACCOUNT, user }
-// }
 export function logInUser(user) {
   return { type: LOGIN, user };
 }
@@ -35,7 +31,6 @@ export const signupDB = (email, nickname, password) => {
         password: password,
       })
       .then((user) => {
-        console.log(user);
         window.alert("회원가입이 완료되었습니다.");
         window.location.assign("/login");
       })
@@ -56,40 +51,26 @@ export const loginDB = (email, password) => {
         password: password,
       })
       .then((user) => {
-        console.log(email)
-        // const token = user.data.token
         localStorage.setItem("token", user.data.token);
-        // localStorage.setItem("userId", email);
-        // localStorage.setItem("is_login", true);
+        localStorage.setItem("userId", email);
         dispatch(
           logInUser({
             userId: email,
           })
         )
-        window.alert("환영합니다!")
+        window.alert(`${user.data.nickName}님 환영합니다!`)
         window.location.assign("/")
       }).catch((error) => {
+        console.log(error)
         const errorCode = error.code;
         const errorMessage = error.message;
-        window.alert("로그인에 실패했습니다! 다시 시도해주세요");
+        if (error.response.status === 400) {
+          window.alert("아이디/비밀번호를 잘못 입력했습니다")
+        }
         console.log(errorCode, errorMessage)
       })
   }
 }
-
-
-
-export const logincheckDB = () => {
-  return function (dispatch) {
-    const userId = localStorage.getItem("userId");
-    const tokenCheck = document.cookie;
-    if (tokenCheck) {
-      dispatch(logInUser({ userId: userId }));
-    } else {
-      dispatch(logOutUser());
-    }
-  };
-};
 
 export const logoutDB = () => {
   return function (dispatch) {
@@ -99,28 +80,11 @@ export const logoutDB = () => {
   };
 };
 
-// export const loginCheckFB = () => {
-//     return function (dispatch) {
-//         auth.onAuthStateChanged((user) => {
-//             if (user) {
-//                 dispatch(logInUser({
-//                     name: user.displayName,
-//                     user_id: user.email,
-//                     uid: user.uid
-//                 }))
-//             } else {
-//                 dispatch(logOutUser())
-//             }
-//         })
-//     }
-// }
-
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOGIN:
       state.user = { ...action.user };
-      console.log(state.user);
       state.is_login = true;
       return state;
     case LOGOUT:
