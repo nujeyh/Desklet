@@ -59,7 +59,6 @@ export const loginDB = (email, password) => {
         console.log(email)
         // const token = user.data.token
         localStorage.setItem("token", user.data.token);
-        // setCookie("token", token)
         // localStorage.setItem("userId", email);
         // localStorage.setItem("is_login", true);
         dispatch(

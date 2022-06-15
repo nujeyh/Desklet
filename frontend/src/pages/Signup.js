@@ -17,11 +17,17 @@ function Account() {
         let reg = /^[0-9a-zA-Z]([-_.0-9a-zA-Z])*@[0-9a-zA-Z]([-_.0-9a-zA-Z])*.([a-zA-Z])*/;
         return reg.test(email);
     };
+
     //비밀번호 영문/숫자 포함(8_20자)
     const passwordCheck = (password) => {
         let _reg2 = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
-
         return _reg2.test(password);
+    }
+
+    // 닉네임 영문/숫자 -,_ 포함
+    const nicknameCheck = (nickname) => {
+        let reg3 = /^[0-9a-zA-z+_-]+$/;
+        return reg3.test(nickname);
     }
 
 
@@ -37,6 +43,9 @@ function Account() {
         if (!passwordCheck(password)) {
             window.alert('비밀번호를 형식에 맞게 입력해주세요')
         }
+        if (!nicknameCheck(nickname)) {
+            window.alert("닉네임을 형식에 맞게 입력해주세요")
+        }
         if (password !== password2) {
             return window.alert('비밀번호와 비밀번호 확인은 같아야 합니다.')
         }
@@ -49,19 +58,19 @@ function Account() {
                 <h1>회원가입</h1>
                 <label htmlFor="id">
                     <p>아이디</p>
-                    <Input id="id" type="email" required onChange={(e) => { setEmail(e.target.value) }} />
+                    <Input id="id" type="email" required onChange={(e) => { setEmail(e.target.value) }} placeholder="이메일 형식에 맞게 작성해 주세요(@)" />
                 </label>
                 <label htmlFor="nic">
                     <p>닉네임</p>
-                    <Input id="nic" required onChange={(e) => { setNickname(e.target.value) }} />
+                    <Input id="nic" required onChange={(e) => { setNickname(e.target.value) }} placeholder="닉네임 영문/숫자 -,_ 포함 작성해 주세요" />
                 </label>
                 <label htmlFor="pw">
                     <p>비밀번호</p>
-                    <Input id="pw" required type="password" onChange={(e) => { setPassword(e.target.value) }} />
+                    <Input id="pw" required type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="비밀번호 영문/숫자 포함(8_20자) 작성해 주세요" />
                 </label>
                 <label htmlFor="pw2">
                     <p>비밀번호 확인</p>
-                    <Input id="pw2" type="password" required onChange={(e) => { setPassword2(e.target.value) }} />
+                    <Input id="pw2" type="password" required onChange={(e) => { setPassword2(e.target.value) }} placeholder="비밀번호 한 번 더 입력해 주세요" />
                 </label>
                 <UserBtn type="submit">회원가입</UserBtn>
                 <LoginZoneText>계정이 있으신가요?</LoginZoneText>

@@ -42,11 +42,11 @@ function Login() {
                 <h1>로그인</h1>
                 <label htmlFor="id">
                     <p>아이디</p>
-                    <Input id="id" type="email" required onChange={(e) => { setEmail(e.target.value) }} />
+                    <Input id="id" type="email" required onChange={(e) => { setEmail(e.target.value) }} placeholder="이메일 형식에 맞게 작성해 주세요(@)" />
                 </label>
                 <label htmlFor="pw">
                     <p>비밀번호</p>
-                    <Input id="pw" required type="password" onChange={(e) => { setPassword(e.target.value) }} />
+                    <Input id="pw" required type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="비밀번호를 입력해 주세요" />
                 </label>
                 <UserBtn onClick={handleLogin}>로그인</UserBtn>
                 <LoginZoneText>계정이 없으신가요?</LoginZoneText>
