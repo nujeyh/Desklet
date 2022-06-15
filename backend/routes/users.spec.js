@@ -1,5 +1,5 @@
 const app = require('../app.js');
-const supertest = require("supertest");
+const request = require("supertest");
 
 // const { request } = require('express');
 
@@ -8,7 +8,7 @@ describe("Post users/signup", () => {
   describe("given a userId, password and nickName", () => {
 
     test('should respond with a 200 status code', async () => {
-      const res = await request(app).post("/users/aaa").send({
+      const res = await request(app).post("/users/signup").send({
         userId: "test1123@email.com",
         password: "1234qwer",
         nickName: "test1123"
@@ -42,7 +42,6 @@ describe("Post users/signup", () => {
       expect(false).toEqual(false);
     });
 
-
   })
 
   
@@ -58,8 +57,6 @@ describe("POST users/auth", () => {
   // test('로그인 요청시 일치하는 토큰을 줘야한다.', async ()=>{
   //   const res = await supertest(users).post("/auth");
   // });
-
-
 
 });
 
