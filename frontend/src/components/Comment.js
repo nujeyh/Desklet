@@ -1,16 +1,16 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 
 import { putCommentDB, deleteCommentDB } from "../redux/modules/comment";
 
-import styled from "styled-components";
 import { SmallBtn, MainBtn } from "../elements/Btn";
 import { Input } from "../elements/Input";
-import { Width } from "../elements/commonStyle";
 
 const Comment = ({ commentObj }) => {
   const dispatch = useDispatch();
   const commentRef = useRef(commentObj.content);
+  const userId = useSelector((state) => state.user.user.userId);
 
   const [update, setUpdate] = useState(false);
   const [inputs, setInputs] = useState({
@@ -60,13 +60,19 @@ const Comment = ({ commentObj }) => {
       dispatch(deleteCommentDB(commentObj._id));
     }
   };
-
+  console.log(commentObj.userId, userId);
   return (
     <ContentWrap>
       <span>{commentObj.nickName}</span>
       <span>{commentObj.createdAt}</span>
-      <SmallBtn onClick={toggleUpdate}>{update ? "닫기" : "수정"}</SmallBtn>
-      <SmallBtn onClick={onClickDelete}>삭제</SmallBtn>
+
+      {commentObj.userId === userId && (
+        <>
+          <SmallBtn onClick={toggleUpdate}>{update ? "닫기" : "수정"}</SmallBtn>
+          <SmallBtn onClick={onClickDelete}>삭제</SmallBtn>
+        </>
+      )}
+
       <div>{commentObj.content}</div>
       {update ? (
         <>
@@ -92,9 +98,6 @@ const ContentWrap = styled.div`
   border-radius: 10px;
   padding: 15px;
   width: 100%;
-  /* @media screen and (width: 900px) {
-    width: 100%;
-  } */
   span {
     margin-right: 20px;
   }

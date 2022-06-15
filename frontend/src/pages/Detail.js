@@ -1,26 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-import styled, { css } from "styled-components";
 import Comment from "../components/Comment";
+import { getCommentListDB, postCommentDB } from "../redux/modules/comment";
+import { getPostOneDB, deletePostDB } from "../redux/modules/post";
 
 import { MainBody, Width } from "../elements/commonStyle";
 import { SmallBtn, MainBtn } from "../elements/Btn";
 import { Input } from "../elements/Input";
-import { getCommentListDB, postCommentDB } from "../redux/modules/comment";
-import { getPostOneDB, deletePostDB } from "../redux/modules/post";
 
 const Detail = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const [isOwner, setisOwner] = useState(true);
-  const post = useSelector((state) => state.post.postOne);
-  const user = useSelector((state) => state.user.user);
-  const commentList = useSelector((state) => state.comment.commentList);
-  // console.log(commentList);
-  const commentRef = useRef("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const post = useSelector((state) => state.post.postOne);
+  const userId = useSelector((state) => state.user.user.userId);
+  const commentList = useSelector((state) => state.comment.commentList);
+  const nickName = useSelector((state) => state.user.user.nickName);
+
+  const commentRef = useRef("");
   const [comment, setComment] = useState("");
 
   const postId = location.state.postId;
@@ -28,9 +29,9 @@ const Detail = () => {
   // 댓글 작성하기
   const onClickWrite = () => {
     const commentObj = {
-      postId: postId,
-      userId: "user.userId",
-      nickName: "nickName",
+      postId,
+      nickName,
+      userId,
       content: commentRef.current.value,
     };
     dispatch(postCommentDB(commentObj));
@@ -60,7 +61,7 @@ const Detail = () => {
           <h2>{post.title}</h2>
           <div>{post.createdAt}</div>
           <span>{post.nickName}</span>
-          {isOwner && (
+          {post.userId === userId && (
             <span>
               <SmallBtn
                 onClick={() => {
