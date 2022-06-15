@@ -60,11 +60,11 @@ const Comment = ({ commentObj }) => {
       dispatch(deleteCommentDB(commentObj._id));
     }
   };
-  console.log(commentObj.userId, userId);
+
   return (
     <ContentWrap>
       <span>{commentObj.nickName}</span>
-      <span>{commentObj.createdAt}</span>
+      <span className="time">{commentObj.createdAt}</span>
 
       {commentObj.userId === userId && (
         <>
@@ -103,6 +103,9 @@ const ContentWrap = styled.div`
   }
   p {
     color: red;
+  }
+  .time {
+    color: silver;
   }
 `;
 
