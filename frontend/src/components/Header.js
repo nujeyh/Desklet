@@ -26,7 +26,7 @@ const Header = () => {
     <>
       <MainBody>
         <HeaderWrap>
-          <h2 onClick={() => navigate("/")}>Desklet</h2>
+          <div onClick={() => navigate("/")}>Desklet</div>
           {isLogin ? (
             <nav>
               <span>{"nickname"}님</span>
@@ -52,12 +52,18 @@ const HeaderWrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 10px 0;
 
   nav {
     margin: auto 0;
   }
   span {
     margin-right: 5px;
+  }
+  div {
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
   }
 `;
 
