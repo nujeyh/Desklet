@@ -21,6 +21,7 @@ router.post("/auth", async (req, res) => {
   res.status(200).send({
     result: "success",
     token,
+    nickName: user.nickName
   });
 });
 
