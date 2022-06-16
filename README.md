@@ -6,7 +6,7 @@
 - 일정 : 2022.06.10 ~ 2022.06.16
 - BE 3명, FE 2명
 
-### [WIKI >](https://github.com/nujeyh/Desklet.wiki.git)
+### [WIKI 바로가기 >](https://github.com/nujeyh/Desklet.wiki.git)
 
 ### 대표 사용 기술 및 라이브러리
 - React / Node.js
