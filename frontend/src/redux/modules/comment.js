@@ -68,7 +68,6 @@ export const postCommentDB = (_commentObj) => async (dispatch) => {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log(data);
     dispatch(
       postComment({
         ...commentObj,

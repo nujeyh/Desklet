@@ -27,11 +27,11 @@ const PostCard = ({ post }) => {
 
       <Title>
         {post.title.substr(0, 20)}
-        {post.title > 20 ? "..." : ""}
+        {post.title.length > 20 ? "..." : ""}
       </Title>
       <Text style={{ width: "100%" }}>
-        {post.content.substr(0, 65)}
-        {post.content > 65 ? "..." : ""}
+        {post.content.substr(0, 68)}
+        {post.content.length > 68 ? "..." : ""}
       </Text>
     </CardWrap>
   );

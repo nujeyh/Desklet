@@ -23,11 +23,17 @@ const Detail = () => {
 
   const commentRef = useRef("");
   const [comment, setComment] = useState("");
+  const [help, setHelp] = useState("");
 
   const postId = location.state.postId;
 
   // 댓글 작성하기
   const onClickWrite = () => {
+    if (commentRef.current.value === "") {
+      setHelp("댓글을 입력해주세요!");
+      return false;
+    }
+
     const commentObj = {
       postId,
       nickName,
@@ -36,6 +42,7 @@ const Detail = () => {
     };
     dispatch(postCommentDB(commentObj));
     setComment("");
+    setHelp("");
   };
 
   // 댓글 삭제하기
@@ -89,6 +96,7 @@ const Detail = () => {
               />
               <MainBtn onClick={onClickWrite}>입력</MainBtn>
             </div>
+            <p>{help}</p>
           </CommentWrap>
         )}
         <CommentWrap>
@@ -124,6 +132,9 @@ const PostImg = styled.img`
 `;
 const CommentWrap = styled.div`
   ${Width}
+  p {
+    color: red;
+  }
 `;
 
 export default Detail;
