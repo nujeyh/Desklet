@@ -7,7 +7,7 @@ import Comment from "../components/Comment";
 import { getCommentListDB, postCommentDB } from "../redux/modules/comment";
 import { getPostOneDB, deletePostDB } from "../redux/modules/post";
 
-import { MainBody, Width } from "../elements/commonStyle";
+import { MainBody, Width, Hr } from "../elements/commonStyle";
 import { SmallBtn, MainBtn } from "../elements/Btn";
 import { Input } from "../elements/Input";
 
@@ -75,18 +75,24 @@ const Detail = () => {
           )}
 
           <p>{post.content}</p>
+          <Hr />
+          <h2>댓글</h2>
         </Wrap>
-
+        {userId && (
+          <CommentWrap>
+            <div>
+              <Input
+                ref={commentRef}
+                value={comment}
+                onChange={onChangeComment}
+                placeholder="댓글 달기..."
+              />
+              <MainBtn onClick={onClickWrite}>입력</MainBtn>
+            </div>
+          </CommentWrap>
+        )}
         <CommentWrap>
-          <div>
-            <Input
-              ref={commentRef}
-              value={comment}
-              onChange={onChangeComment}
-              placeholder="댓글 달기..."
-            />
-            <MainBtn onClick={onClickWrite}>입력</MainBtn>
-          </div>
+          {commentList[0] ? "" : "작성된 댓글이 없습니다.🥲"}
         </CommentWrap>
         <div>
           {commentList.map((comment) => {
