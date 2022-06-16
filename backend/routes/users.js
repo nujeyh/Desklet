@@ -2,45 +2,46 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrpyt = require("bcrypt");
-require("dotenv").config();
 
 const {User, postUsersSchema} = require("../schemas/user");
 
 router.post("/auth", async (req, res) => {
   try{
-  const { userId, password } = req.body;
-  console.log(userId, password)
+    var { userId, password } = req.body;
+  } catch {
+    return res.status(402).send({
+      errorMessage: '입력조건이 맞지 않습니다.',
+    });    
+  }
 
   const user = await User.findOne({userId}).exec();
-  console.log(user)
   
-  // || password !== user.password
   if (!user) {
-      res.status(401).send({
-      errorMessage: "아이디가 잘못 됐습니다.",
+    return res.status(401).send({
+      errorMessage: "아이디나 비밀번호가 잘못 됐습니다.",
     });
-    return;
+  } 
+
+  console.log("입력 pw: ", password);
+  console.log("DB pw: ", user.password);    
+
+  const hashedPassword = bcrpyt.compareSync(password, user.password);
+
+  console.log("해싱pw비교: ", hashedPassword);
+
+  if (hashedPassword) {
+    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET_KEY);
+    return res.status(200).send({
+      result: "success",
+      token,
+      nickName: user.nickName
+    });
   } else {
-    const hashedPassword = bcrpyt.compareSync(password, user.password);
-    console.log("해쉬 패스워드:", hashedPassword);
-    if(hashedPassword) {
-      const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET_KEY);
-      console.log(token, userId);
-      res.status(200).send({
-        result: "success",
-        token,
-        nickName: user.nickName
-      });
-    } else {
-      res.status(400).send({ msg: "비밀번호가 다릅니다."})
-    }
+    return res.status(400).send({ 
+      errorMessage: "아이디나 비밀번호가 잘못 됐습니다."
+    });
   }
-}catch(err) {
-  console.log(err)
-  if(err) {
-    throw err;
-  }
-}
+
 });
 
 router.post("/signup", async (req, res) => {
@@ -64,9 +65,15 @@ router.post("/signup", async (req, res) => {
     });
   }
 
-  const hash = bcrpyt.hashSync(password, 10);
-  const user = new User({ userId, password: hash, nickName });
-  user.save();
+  try{
+    const hash = bcrpyt.hashSync(password, 10);
+    const user = new User({ userId, password: hash, nickName });
+    user.save();
+  } catch {
+    return res.status(400).send({
+      errorMessage: 'DataBase오류로 등록되지 않았습니다.'
+    })    
+  }
 
   res.status(200).send({
     result: "success",
