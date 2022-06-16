@@ -5,6 +5,9 @@
 - 항해 99 6주차 미니 프로젝트
 - 일정 : 2022.06.10 ~ 2022.06.16
 - BE 3명, FE 2명
+
+### [WIKI >](https://github.com/nujeyh/Desklet.wiki.git)
+
 ### 대표 사용 기술 및 라이브러리
 - React / Node.js
 - Redux, immer, Axios, styled-components
@@ -14,6 +17,8 @@
 - 댓글 작성, 조회, 수정, 삭제
 - 회원가입, 로그인
 - 반응형 웹
+
+
 
 ## 화면
 
