@@ -19,7 +19,7 @@ export function logOutUser(user) {
 }
 
 // middlewares
-const url = "http://3.34.45.167";
+const url = "http://15.165.160.107";
 // "http://3.34.200.72";
 
 export const signupDB = (email, nickname, password) => {

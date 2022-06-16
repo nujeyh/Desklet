@@ -42,7 +42,7 @@ const initialState = {
 // Middleware //
 ////////////////
 
-const url = "http://3.34.45.167";
+const url = "http://15.165.160.107";
 
 // 댓글 모두 불러오기 | GET
 export const getCommentListDB = (postId) => async (dispatch) => {
