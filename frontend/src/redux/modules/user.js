@@ -6,7 +6,7 @@ const LOGIN = "user/LOGIN";
 const LOGOUT = "user/LOGOUT";
 
 const initialState = {
-  user: null,
+  user: { user: null, nickName: null },
   is_login: false,
 };
 
@@ -57,6 +57,7 @@ export const loginDB = (email, password) => {
         dispatch(
           logInUser({
             userId: email,
+            nickName: user.data.nickName,
           })
         )
         window.alert(`${user.data.nickName}님 환영합니다!`)
