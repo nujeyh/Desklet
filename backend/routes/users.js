@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+
 require("dotenv").config();
 
 const {User, postUsersSchema} = require("../schemas/user.js");
@@ -46,8 +47,14 @@ router.post("/signup", async (req, res) => {
     });
   }
 
-  const user = new User({ userId, password, nickName });
-  user.save();
+  try{
+    const user = new User({ userId, password, nickName });
+    user.save();
+  } catch {
+    return res.status(400).send({
+      errorMessage: 'DataBase오류로 등록되지 않았습니다.'
+    })    
+  }
 
   res.status(200).send({
     result: "success",

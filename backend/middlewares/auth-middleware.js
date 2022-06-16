@@ -1,17 +1,13 @@
 const jwt = require("jsonwebtoken");
 const {User, Object} = require("../schemas/user.js");
+require("dotenv").config();
 
 module.exports = (req, res, next) => {
     console.log("미들웨어 들어왔습니다========================");
 
     const { authorization } = req.headers; 
 
-    console.log(authorization);
-
     const [tokenType, tokenValue] = authorization.split(" ");
-
-    console.log("토큰타입: ", tokenType);
-    console.log("토큰값: ",tokenValue);
 
     if (tokenType !== 'Bearer') {
       return res.status(401).send({
@@ -20,7 +16,7 @@ module.exports = (req, res, next) => {
     }
 
     try {
-      const { userId } = jwt.verify(tokenValue, "test");
+      const { userId } = jwt.verify(tokenValue, process.JWT_SECRET_KEY);
       console.log(userId);
 
       User.findOne({ userId }).exec().then((user) => {
