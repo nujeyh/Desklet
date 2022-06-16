@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrpyt = require("bcrypt");
-require("dotenv").config();
 
 const {User, postUsersSchema} = require("../schemas/user");
 
@@ -11,7 +10,7 @@ router.post("/auth", async (req, res) => {
     var { userId, password } = req.body;
   } catch {
     return res.status(402).send({
-      errorMessage: "잘못된 입렵입니다.",
+      errorMessage: '입력조건이 맞지 않습니다.',
     });    
   }
 
