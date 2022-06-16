@@ -17,6 +17,7 @@ export const Width = css`
 
 // 연한 회색 수평선
 export const Hr = styled.hr`
+  border: none;
   border-top: solid 1px #ddd;
 `;
 
