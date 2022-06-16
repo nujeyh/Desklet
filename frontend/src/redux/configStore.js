@@ -7,7 +7,6 @@ import comment from "./modules/comment";
 const middlewares = [thunk];
 const rootReducer = combineReducers({ user, post, comment });
 const enhancer = applyMiddleware(...middlewares);
-
 const store = createStore(rootReducer, enhancer);
 
 export default store;
