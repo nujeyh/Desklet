@@ -74,6 +74,23 @@ export const loginDB = (email, password) => {
   }
 }
 
+export const loginCheck = () => {
+  return function (dispatch) {
+    const userId = localStorage.getItem("userId");
+    const nickName = localStorage.getItem("nickName");
+    if (userId) {
+      dispatch(logInUser({ userId, nickName }));
+    }
+
+    // const tokenCheck = document.cookie;
+    // if (tokenCheck) {
+    //   dispatch(logInUser({ userId: userId }));
+    // } else {
+    //   dispatch(logOutUser());
+    // }
+  };
+};
+
 export const logoutDB = () => {
   return function (dispatch) {
     localStorage.clear();

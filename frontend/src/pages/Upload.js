@@ -12,9 +12,9 @@ function Upload() {
   const userNickname = localStorage.getItem("nickName")
   const fileInput = useRef(null);
 
-  const [attachment, setAttachment] = useState(post_list ? post_list.imageUrl : "");
-  const [title, setTitle] = useState(post_list ? post_list.title : "");
-  const [content, setContent] = useState(post_list ? post_list.content : "");
+  const [attachment, setAttachment] = useState(is_edit ? post_list.imageUrl : "");
+  const [title, setTitle] = useState(is_edit ? post_list.title : "");
+  const [content, setContent] = useState(is_edit ? post_list.content : "");
 
 
   const selectImg = (e) => {
