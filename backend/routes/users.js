@@ -1,29 +1,48 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-
+const bcrpyt = require("bcrypt");
 require("dotenv").config();
 
-const {User, postUsersSchema} = require("../schemas/user.js");
+const {User, postUsersSchema} = require("../schemas/user");
 
 router.post("/auth", async (req, res) => {
-  const { userId, password } = req.body;
+  try{
+    var { userId, password } = req.body;
+  } catch {
+    return res.status(402).send({
+      errorMessage: "잘못된 입렵입니다.",
+    });    
+  }
 
-  const user = await User.findOne({ userId, password }).exec();
+  const user = await User.findOne({userId}).exec();
+  
+  if (!user) {
+    return res.status(401).send({
+      errorMessage: "아이디나 비밀번호가 잘못 됐습니다.",
+    });
+  } 
 
-  if (!user || password !== user.password) {
-    return res.status(400).send({
-      errorMessage: "아이디 또는 패스워드가 잘못됐습니다.",
+  console.log("입력 pw: ", password);
+  console.log("DB pw: ", user.password);    
+
+  const hashedPassword = bcrpyt.compareSync(password, user.password);
+
+  console.log("해싱pw비교: ", hashedPassword);
+
+  if (hashedPassword) {
+    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET_KEY);
+    return res.status(200).send({
+      result: "success",
+      token,
+      nickName: user.nickName
+    });
+  } else {
+    return res.status(400).send({ 
+      errorMessage: "아이디나 비밀번호가 잘못 됐습니다."
     });
   }
 
-  const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET_KEY);
-
-  res.status(200).send({
-    result: "success",
-    token,
-    nickName: user.nickName
-  });
 });
 
 router.post("/signup", async (req, res) => {
@@ -48,7 +67,8 @@ router.post("/signup", async (req, res) => {
   }
 
   try{
-    const user = new User({ userId, password, nickName });
+    const hash = bcrpyt.hashSync(password, 10);
+    const user = new User({ userId, password: hash, nickName });
     user.save();
   } catch {
     return res.status(400).send({

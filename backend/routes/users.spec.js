@@ -6,9 +6,9 @@ describe("Post users/signup", () => {
 
   describe("given a userId, password and nickName", () => {
 
-
-
-
+    beforeEach(() => {
+      // NOTE: Connect db
+    });
 
     // 정보값 undefined로 넘기기
     test('give undefined value should respond errorMessage "입력조건이 맞지 않습니다."', async () => {
@@ -67,7 +67,6 @@ describe("Post users/signup", () => {
 //     expect(true).toEqual(true);
 //   });
 
-
 });
 
 // describe("POST users/auth", () => {
@@ -77,4 +76,3 @@ describe("Post users/signup", () => {
 //   // });
 
 // });
-require("mongoose").disconnect();
