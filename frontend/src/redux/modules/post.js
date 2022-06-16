@@ -53,7 +53,7 @@ const initialState = {
 // Middleware //
 ////////////////
 
-const url = "http://15.165.160.107";
+const url = "http://3.34.45.167";
 
 // 게시물 업로드
 export const addPostDB = (formData) => {

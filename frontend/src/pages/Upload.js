@@ -30,8 +30,8 @@ function Upload() {
   };
 
   const handleUpload = () => {
-    if (content === "" || fileInput === "" || title === "") {
-      window.alert('내용을 입력해주세요!')
+    if (content === "" || attachment === "" || title === "") {
+      window.alert('사진과 내용 모두 입력해 주세요!')
     }
 
     const file = fileInput.current.files[0];
