@@ -6,8 +6,6 @@
 - 일정 : 2022.06.10 ~ 2022.06.16
 - BE 3명, FE 2명
 
-### [WIKI 바로가기 >](https://github.com/nujeyh/Desklet.wiki.git)
-
 ### 대표 사용 기술 및 라이브러리
 - React / Node.js
 - Redux, immer, Axios, styled-components
@@ -18,7 +16,7 @@
 - 회원가입, 로그인
 - 반응형 웹
 
-
+### [WIKI 바로가기 >](https://github.com/nujeyh/Desklet.wiki.git)
 
 ## 화면
 
