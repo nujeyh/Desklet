@@ -24,19 +24,19 @@
 
 ### 메인
 
-> <img src=https://user-images.githubusercontent.com/102746846/174040080-90456543-0336-4a35-a69e-387d11c116f7.png height=500 />
+> <img src=https://user-images.githubusercontent.com/102746846/174040080-90456543-0336-4a35-a69e-387d11c116f7.png />
 
 ### 게시물 작성, 수정
 
-> <img src=https://user-images.githubusercontent.com/102746846/174041003-393ea370-dc7d-4d35-87c8-ec71895bf31f.png height=700 />
+> <img src=https://user-images.githubusercontent.com/102746846/174041003-393ea370-dc7d-4d35-87c8-ec71895bf31f.png />
 
 ### 상세
 
-> <img src=https://user-images.githubusercontent.com/102746846/174040330-72d9e66d-d1bd-4479-aaa3-6ebb0baafcbf.png height=700 />
+> <img src=https://user-images.githubusercontent.com/102746846/174040330-72d9e66d-d1bd-4479-aaa3-6ebb0baafcbf.png />
 
 ### 회원가입 
-> <img src=https://user-images.githubusercontent.com/102746846/174041692-60076a89-431f-4883-bf8c-88f584997106.png height=700 />
+> <img src=https://user-images.githubusercontent.com/102746846/174041692-60076a89-431f-4883-bf8c-88f584997106.png />
 
 ### 로그인
-> <img src=https://user-images.githubusercontent.com/102746846/174041730-e150f027-f626-41ba-bf1a-a052b8273ed2.png height=700 />
+> <img src=https://user-images.githubusercontent.com/102746846/174041730-e150f027-f626-41ba-bf1a-a052b8273ed2.png />
 
