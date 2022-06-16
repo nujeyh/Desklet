@@ -16,7 +16,7 @@
 - 회원가입, 로그인
 - 반응형 웹
 
-### [WIKI 바로가기 >](https://github.com/nujeyh/Desklet)
+### [WIKI 바로가기 >](https://github.com/nujeyh/Desklet/wiki)
 
 ## 화면
 
