@@ -19,7 +19,7 @@ export function logOutUser(user) {
 }
 
 // middlewares
-const url = "http://15.165.160.107";
+const url = "http://3.34.45.167";
 // "http://3.34.200.72";
 
 export const signupDB = (email, nickname, password) => {
@@ -63,12 +63,9 @@ export const loginDB = (email, password) => {
         window.alert(`${user.data.nickName}님 환영합니다!`)
         window.location.assign("/")
       }).catch((error) => {
-        console.log(error)
         const errorCode = error.code;
         const errorMessage = error.message;
-        if (error.response.status === 400) {
-          window.alert("아이디/비밀번호를 잘못 입력했습니다")
-        }
+        window.alert("로그인에 실패했습니다! 다시 시도해주세요")
         console.log(errorCode, errorMessage)
       })
   }
