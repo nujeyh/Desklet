@@ -53,6 +53,7 @@ export const loginDB = (email, password) => {
       .then((user) => {
         localStorage.setItem("token", user.data.token);
         localStorage.setItem("userId", email);
+        localStorage.setItem("nickName", user.data.nickName)
         dispatch(
           logInUser({
             userId: email,

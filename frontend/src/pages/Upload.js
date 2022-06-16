@@ -9,6 +9,7 @@ function Upload() {
   const { id } = useParams();
   const is_edit = id ? true : false;
   const post_list = useSelector((state) => state.post.postOne);
+  const userNickname = localStorage.getItem("nickName")
   const fileInput = useRef(null);
 
   const [attachment, setAttachment] = useState(post_list ? post_list.imageUrl : "");
@@ -63,7 +64,7 @@ function Upload() {
   return (
     <UploadSection>
       <BorderSection>
-        <p>{post_list.nickName}님의 데스크 셋업을 소개해보세요 ✨</p>
+        <p>{userNickname}님의 데스크 셋업을 소개해보세요 ✨</p>
         <ImgSection>
           <button>
             <label htmlFor="file-input">파일선택</label>
