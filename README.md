@@ -2,9 +2,8 @@
 <img src=https://user-images.githubusercontent.com/102746846/174035114-8cee4b88-2139-45b7-92df-6baafba9503e.jpg height=200/>
 
 ## 프로젝트 개요
-- 항해 99 6주차 미니 프로젝트
 - 일정 : 2022.06.10 ~ 2022.06.16
-- BE 3명, FE 2명
+- 인원 : BE 3명, FE 2명
 
 ### 대표 사용 기술 및 라이브러리
 - React / Node.js
